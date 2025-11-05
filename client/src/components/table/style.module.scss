@@ -1,0 +1,33 @@
+.table-container {
+  width: 100%;
+
+  .pinned-column-header-left {
+    position: sticky;
+    left: 0;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+  }
+
+  .pinned-column-left {
+    position: sticky;
+    left: 0;
+    top: 0;
+    background-color: white;
+    z-index: 9;
+  }
+
+  .pinned-column-header-right {
+    position: sticky;
+    right: 0;
+    background-color: white;
+    z-index: 10;
+  }
+
+  .pinned-column-right {
+    position: sticky;
+    right: 0;
+    background-color: white;
+    z-index: 9;
+  }
+}
