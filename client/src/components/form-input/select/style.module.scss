@@ -1,0 +1,21 @@
+.select-container {
+  height: 36px;
+  :global(.MuiInputBase-root) {
+    height: 36px;
+    padding-right: 45px !important;
+    &:hover fieldset {
+      border-color: #646464 !important;
+    }
+    &:focus fieldset {
+      border-color: #646464 !important;
+    }
+    fieldset {
+      border: 1px solid #0000003b !important;
+    }
+    :global(.MuiAutocomplete-endAdornment) {
+      :global(.MuiButtonBase-root) {
+        transition: all 0.3s ease;
+      }
+    }
+  }
+}

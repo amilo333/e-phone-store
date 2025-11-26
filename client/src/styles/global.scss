@@ -1,3 +1,5 @@
+@use "./component";
+
 * {
   margin: 0;
   padding: 0;
@@ -6,6 +8,9 @@
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --light: #fff;
+  --dark: #000;
+  --dark-10: #0000001a;
 }
 
 body,

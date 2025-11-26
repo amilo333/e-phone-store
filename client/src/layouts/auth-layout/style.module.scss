@@ -1,0 +1,15 @@
+.auth-layout-container {
+  height: 100dvh;
+  background-image: url("../../assets/images/auth-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  .outlet-section {
+    width: 100%;
+    height: calc(100dvh - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

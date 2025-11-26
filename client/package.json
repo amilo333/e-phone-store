@@ -13,12 +13,18 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@faker-js/faker": "^10.1.0",
+    "@hookform/resolvers": "^5.2.2",
     "@mui/material": "^7.3.4",
     "@tanstack/react-table": "^8.21.3",
+    "@untitledui/icons": "^0.0.19",
     "clsx": "^2.1.1",
+    "i18next": "^25.6.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router": "^7.9.5"
+    "react-hook-form": "^7.66.0",
+    "react-i18next": "^16.2.4",
+    "react-router": "^7.9.5",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
