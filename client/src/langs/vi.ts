@@ -1,6 +1,6 @@
 export const vi = {
   login: {
-    title: "Login",
+    title: "Đăng nhập",
   }
 };
  

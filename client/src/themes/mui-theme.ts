@@ -22,4 +22,7 @@ export const theme = createTheme({
       main: "#41A67E",
     },
   },
+  typography: {
+    fontFamily: `'Quicksand', Helvetica, Arial, sans-serif`,
+  },
 });

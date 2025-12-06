@@ -1,40 +1,67 @@
-import { Button, FormInput } from "@/components";
+import { Button, Field, TextField } from "@/components";
+import { useToast } from "@/hooks";
+import userMock from "@/mocks/user.json";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { NavLink, useNavigate } from "react-router";
+import { loginSchema } from "./schama";
 import styles from "./style.module.scss";
-import { NavLink } from "react-router";
+import type { TLoginForm } from "./type";
 
 export default function Login() {
   const { t } = useTranslation();
-  const { control } = useForm();
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<TLoginForm>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
+  const handleLogin = async (data: TLoginForm) => {
+    const user = userMock.find(
+      (user) =>
+        user.username === data.username && user.password === data.password
+    );
+    if (!user) {
+      toast.error("Tên đăng nhập hoặc mật khẩu không đúng!");
+      return;
+    } else {
+      localStorage.setItem('isAuthenticated', 'true');
+      toast.success("Đăng nhập thành công!");
+      navigate("/");
+    }
+  };
 
   return (
     <div className={styles["login-container"]}>
-      <h2>{t("login.title")}</h2>
+      <p className={styles["title"]}>{t("login.title")}</p>
       <div className={styles["login-form"]}>
-        <FormInput control={control} name="username" label="Username" />
-        <FormInput
-          control={control}
-          name="password"
-          label="Password"
-          textFieldType="password"
-        />
+        <Field control={control} name="username" label="Tên đăng nhập">
+          <TextField error={errors?.username?.message} />
+        </Field>
+        <Field control={control} name="password" label="Mật khẩu">
+          <TextField type="password" error={errors?.password?.message} />
+        </Field>
         <div className={styles["sub-action-section"]}>
-          <FormInput
-            control={control}
-            name="forgotPassword"
-            type="checkbox"
-            id="remember"
-            label="Remember me"
-          />
-          <p className={styles['link']}>
-            Have an account?
+          <p className={styles["link"]}>
+            Bạn đã có tài khoản?
             <NavLink className="navlink" to="/auth/register">
-              Register
+              Đăng ký
             </NavLink>
           </p>
         </div>
-        <Button variant="contained">Login</Button>
+        <Button variant="contained" onClick={handleSubmit(handleLogin)}>
+          Đăng nhập
+        </Button>
       </div>
     </div>
   );

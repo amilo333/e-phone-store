@@ -5,3 +5,11 @@
     text-decoration: underline;
   }
 }
+
+.navlink-danger {
+  color: var(--error-primary);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

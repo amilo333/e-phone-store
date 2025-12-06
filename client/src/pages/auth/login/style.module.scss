@@ -8,6 +8,10 @@
   align-items: center;
   gap: 16px;
   background-color: #ffffffc6;
+  .title {
+    font-size: 26px;
+    font-weight: 600;
+  }
   .login-form {
     width: 100%;
     display: flex;

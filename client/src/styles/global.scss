@@ -1,16 +1,31 @@
-@use "./component";
+@use "./_component";
+@use "./_font";
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Quicksand', Helvetica, Arial, sans-serif;
+  font-size: 15px;
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   --light: #fff;
   --dark: #000;
   --dark-10: #0000001a;
+  --general-font-size: 15px;
+  --background: #ffffff;
+  --foreground: #171717;
+  --shadow-primary: #a7a7a7;
+  --input-border-primary: #0000003b;
+  --input-border-hover: #8f8f8f;
+  --input-border-focus: #646464;
+  --error-primary: #f72525;
+  --primary-color: #80A1BA;
+  --secondary-color: #E0C2FF;
+  --warn-color: #FF6600;
+  --info-color: #239BA7;
+  --success-color: #41A67E;
 }
 
 body,

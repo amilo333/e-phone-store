@@ -7,31 +7,44 @@
     font-weight: 500;
   }
   .label.error {
-    color: #d32f2f;
+    color: var(--error-primary);
   }
   .textfield-root {
     width: 100%;
     .textfield-input {
       height: 16px;
       padding: 10px 15px;
+      color: var(--foreground);
+      font-size: var(--general-font-size);
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 500px var(--background) inset !important;
+        -webkit-text-fill-color: var(--foreground) !important;
+      }
     }
     :global(.MuiInputBase-root) {
+      fieldset {
+        border: 1px solid var(--input-border-primary);
+      }
       &:hover fieldset {
-        border: 1px solid #8f8f8f;
+        border: 1px solid var(--input-border-hover);
       }
     }
     :global(.MuiInputBase-root.Mui-focused) {
       fieldset {
-        border: 1px solid #646464;
+        border: 1px solid var(--input-border-focus);
       }
     }
     :global(.MuiInputBase-root.Mui-error) {
       fieldset {
-        border: 1px solid #d32f2f;
+        border: 1px solid var(--error-primary);
       }
     }
   }
   .error-text {
-    color: #d32f2f;
+    color: var(--error-primary);
+    font-size: 14px;
   }
 }

@@ -4,8 +4,8 @@ import { en } from "./en";
 import { vi } from "./vi";
 
 i18n.use(initReactI18next).init({
-  lng: "en",
-  fallbackLng: "en",
+  lng: "vi",
+  fallbackLng: "vi",
   interpolation: {
     escapeValue: false,
   },

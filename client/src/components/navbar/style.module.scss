@@ -1,17 +1,27 @@
 .navbar-container {
   height: 60px;
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
-  background: #ffffffd6;
+  background: transparent;
   position: fixed;
-  top: 10px;
-  border-radius: 10px;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 20px;
+  .navbar-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    padding: 10px 16px;
+    background: #ffffffd6;
+    &.navbar-authenticated {
+      box-shadow: 0 2px 4px 2px var(--shadow-primary);
+    }
+  }
   .left-side {
     display: flex;
+    align-items: center;
     gap: 10px;
     .icon {
       padding: 2px 5px;
@@ -40,6 +50,11 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    .page-icon-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
     svg {
       cursor: pointer;
     }
