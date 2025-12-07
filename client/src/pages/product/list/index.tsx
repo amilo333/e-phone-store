@@ -2,13 +2,22 @@ import { Breadscrumbs, Field, TextField } from "@/components";
 import { Heart, Star01 } from "@untitledui/icons";
 import { useForm } from "react-hook-form";
 import styles from "./style.module.scss";
+import { usePageStore } from "@/stores";
+import { useEffect } from "react";
 
 export default function ProducList() {
+  const {setPageName} = usePageStore()
+
   const { control } = useForm({
     defaultValues: {
       search: "",
     },
   });
+
+  useEffect(() => {
+    setPageName('Danh sách sản phẩm')
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles["product-list-container"]}>

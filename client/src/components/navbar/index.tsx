@@ -1,4 +1,5 @@
 import { Button, Field, MenuIcon, TextField } from "@/components";
+import { usePageStore } from "@/stores";
 import InputAdornment from "@mui/material/InputAdornment";
 import { SearchMd } from "@untitledui/icons";
 import clsx from "clsx";
@@ -10,6 +11,7 @@ import styles from "./style.module.scss";
 export default function Navbar() {
   const isAuthenticated = Boolean(localStorage.getItem("isAuthenticated"));
 
+  const { pageName } = usePageStore();
   const navigate = useNavigate();
 
   const { control } = useForm({
@@ -38,7 +40,7 @@ export default function Navbar() {
         <div className={styles["left-side"]}>
           <span className={styles["logo"]}>EPS</span>
           {isAuthenticated ? (
-            <h3>Tên màn hình</h3>
+            <h3>{pageName}</h3>
           ) : (
             <Field control={control} name="search">
               <TextField

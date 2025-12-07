@@ -1,16 +1,25 @@
 import { Button, Field, RadioGroup, TextField } from "@/components";
+import { usePageStore } from "@/stores";
 import { CheckCircle, CreditCard02, MarkerPin04 } from "@untitledui/icons";
 import clsx from "clsx";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./style.module.scss";
 
 export default function Cart() {
+  const { setPageName } = usePageStore();
+
   const { control } = useForm({
     defaultValues: {
       address: "",
-      payment: 'cod'
+      payment: "cod",
     },
   });
+
+  useEffect(() => {
+    setPageName("Quản lý giỏ hàng");
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles["cart-container"]}>
@@ -82,16 +91,18 @@ export default function Cart() {
               <span>Phương thức thanh toán</span>
             </p>
             <Field control={control} name="payment">
-              <RadioGroup options={[
-                {
-                  label: 'Thanh toán khi nhận hàng (COD)',
-                  value: 'cod'
-                },
-                {
-                  label: 'Chuyển khoản ngân hàng',
-                  value: 'banking'
-                },
-              ]} />
+              <RadioGroup
+                options={[
+                  {
+                    label: "Thanh toán khi nhận hàng (COD)",
+                    value: "cod",
+                  },
+                  {
+                    label: "Chuyển khoản ngân hàng",
+                    value: "banking",
+                  },
+                ]}
+              />
             </Field>
           </div>
           <Button variant="contained">Đặt hàng</Button>
