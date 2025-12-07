@@ -1,16 +1,10 @@
-import { Button, Field, TextField } from "@/components";
+import { Button, Field, MenuIcon, TextField } from "@/components";
 import InputAdornment from "@mui/material/InputAdornment";
-import {
-  Flash,
-  Menu01,
-  SearchMd,
-  ShoppingBag01,
-  ShoppingCart01,
-  User02,
-} from "@untitledui/icons";
+import { SearchMd } from "@untitledui/icons";
 import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { privateMenuIcon, publicMenuIcon } from "./constant";
 import styles from "./style.module.scss";
 
 export default function Navbar() {
@@ -40,15 +34,11 @@ export default function Navbar() {
         [styles["padding"]]: isAuthenticated,
       })}
     >
-      <div
-        className={clsx(styles["navbar-wrapper"], {
-          [styles["navbar-authenticated"]]: isAuthenticated,
-        })}
-      >
+      <div className={styles["navbar-wrapper"]}>
         <div className={styles["left-side"]}>
-          <Flash className={styles["icon"]} />
+          <span className={styles["logo"]}>EPS</span>
           {isAuthenticated ? (
-            <h3>Cart</h3>
+            <h3>Tên màn hình</h3>
           ) : (
             <Field control={control} name="search">
               <TextField
@@ -67,11 +57,24 @@ export default function Navbar() {
         </div>
         <div className={styles["right-side"]}>
           <div className={styles["page-icon-group"]}>
-            <ShoppingBag01 onClick={() => navigate("/")} />
+            {publicMenuIcon.map((item) => (
+              <MenuIcon
+                icon={item.icon}
+                label={item.label}
+                to={item.to}
+                key={item.to}
+              />
+            ))}
             {isAuthenticated && (
               <>
-                <ShoppingCart01 onClick={() => navigate("/cart")} />
-                <User02 onClick={() => {}} />
+                {privateMenuIcon.map((item) => (
+                  <MenuIcon
+                    icon={item.icon}
+                    label={item.label}
+                    to={item.to}
+                    key={item.to}
+                  />
+                ))}
               </>
             )}
           </div>
@@ -79,9 +82,8 @@ export default function Navbar() {
             color={isAuthenticated ? "error" : "primary"}
             onClick={handleAuthen}
           >
-            {isAuthenticated ? "logout" : "login"}
+            {isAuthenticated ? "Đăng xuất" : "Đăng nhập"}
           </Button>
-          <Menu01 />
         </div>
       </div>
     </div>

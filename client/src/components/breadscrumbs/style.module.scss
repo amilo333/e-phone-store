@@ -1,0 +1,9 @@
+.breadscrumbs-container {
+  :global(.MuiBreadcrumbs-li) {
+    font-weight: 500;
+  }
+  :global(.MuiBreadcrumbs-li:last-child .MuiTypography-root) {
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+}

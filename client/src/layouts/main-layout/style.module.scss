@@ -1,7 +1,7 @@
 .main-layout-container {
-  height: 100dvh;
-  background-color: rgb(241, 241, 241);
+  min-height: 100dvh;
+  background-color: rgb(226, 226, 226);
   .outlet-section {
-    padding: 90px 20px 0;
+    padding: 90px 20px 20px;
   }
 }

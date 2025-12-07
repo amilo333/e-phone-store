@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Quicksand', Helvetica, Arial, sans-serif;
+  font-family: "Quicksand", Helvetica, Arial, sans-serif;
   font-size: 15px;
 }
 
@@ -21,16 +21,19 @@
   --input-border-hover: #8f8f8f;
   --input-border-focus: #646464;
   --error-primary: #f72525;
-  --primary-color: #80A1BA;
-  --secondary-color: #E0C2FF;
-  --warn-color: #FF6600;
-  --info-color: #239BA7;
-  --success-color: #41A67E;
+  --primary-color: #80a1ba;
+  --secondary-color: #e0c2ff;
+  --warn-color: #ff6600;
+  --info-color: #239ba7;
+  --success-color: #41a67e;
 }
 
 body,
 #root {
   min-height: 100vh;
+  p {
+    margin: 0;
+  }
 }
 
 @media (prefers-color-scheme: light) {

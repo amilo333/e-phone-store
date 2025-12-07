@@ -23,11 +23,18 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    .icon {
+    .logo {
       padding: 2px 5px;
-      color: #239ba7;
+      color: var(--primary-color);
       width: 35px;
       height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--primary-color);
+      border-radius: 4px;
+      cursor: default;
+      font-weight: 600;
     }
     .menu-list {
       list-style-type: none;

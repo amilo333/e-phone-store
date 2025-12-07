@@ -1,4 +1,3 @@
-import withAuthRouter from "@/components/HOC/auth-router";
 import MainLayout from "@/layouts/main-layout";
 import Cart from "@/pages/cart";
 import ProducList from "@/pages/product/list";
@@ -23,11 +22,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        Component: withAuthRouter(ProducList),
+        Component: ProducList,
       },
       {
         path: "cart",
-        Component: withAuthRouter(Cart),
+        Component: Cart,
       },
     ],
   },
