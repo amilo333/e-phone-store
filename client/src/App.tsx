@@ -3,6 +3,7 @@ import { RouterProvider } from "react-router";
 import { Toaster as ToasterProvider } from "sonner";
 import { router } from "./routers";
 import { theme } from "./themes";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 export default function App() {
   return (

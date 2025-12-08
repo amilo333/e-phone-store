@@ -1,5 +1,6 @@
 import MainLayout from "@/layouts/main-layout";
 import Cart from "@/pages/cart";
+import ProductDetail from "@/pages/product/detail";
 import ProducList from "@/pages/product/list";
 import { createBrowserRouter } from "react-router";
 import AuthLayout from "../layouts/auth-layout";
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: "",
         Component: ProducList,
+      },
+      {
+        path: "/product/:id",
+        Component: ProductDetail,
       },
       {
         path: "cart",

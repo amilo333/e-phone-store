@@ -1,12 +1,14 @@
 import { Breadscrumbs, Field, TextField } from "@/components";
-import { Heart, Star01 } from "@untitledui/icons";
-import { useForm } from "react-hook-form";
-import styles from "./style.module.scss";
 import { usePageStore } from "@/stores";
+import { Heart, Star01 } from "@untitledui/icons";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import styles from "./style.module.scss";
 
 export default function ProducList() {
-  const {setPageName} = usePageStore()
+  const { setPageName } = usePageStore();
+  const navigate = useNavigate();
 
   const { control } = useForm({
     defaultValues: {
@@ -14,8 +16,12 @@ export default function ProducList() {
     },
   });
 
+  const redirectToDetail = (id: string) => {
+    navigate(`/product/${id}`);
+  };
+
   useEffect(() => {
-    setPageName('Danh sách sản phẩm')
+    setPageName("Danh sách sản phẩm");
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -40,15 +46,19 @@ export default function ProducList() {
       <Breadscrumbs items={[{ label: "Iphone", href: "/?product=iphone" }]} />
 
       <div className={styles["product-grid"]}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+        {["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].map((item) => (
           <div key={item} className={styles["product-card"]}>
             <img
               className={styles["product-img"]}
               src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-17-pro-cam_3.jpg"
               alt="product"
+              onClick={() => redirectToDetail(item)}
             />
             <div className={styles["product-info"]}>
-              <p className={styles["product-name"]}>
+              <p
+                className={styles["product-name"]}
+                onClick={() => redirectToDetail(item)}
+              >
                 Bàn phím AKKO ACR Pro Alice Plus Spray Paint White AKKO CS
                 switch
               </p>
