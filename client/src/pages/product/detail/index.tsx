@@ -1,24 +1,48 @@
 import { Breadscrumbs, Button, Gallery } from "@/components";
-import styles from "./style.module.scss";
-import { useEffect } from "react";
 import { usePageStore } from "@/stores";
+import clsx from "clsx";
+import { useEffect } from "react";
+import styles from "./style.module.scss";
+import type { TProductModel } from "./type";
 
 export default function ProductDetail() {
-    const { setPageName } = usePageStore();
-  
+  const { setPageName } = usePageStore();
+
   const breadscrumbsList = [
     { label: "Iphone", href: "/?product=iphone" },
     { label: "Iphone 15 Pro MAX", href: "#" },
   ];
 
-  const models = [
+  const models: TProductModel[] = [
     {
       name: "Dung lượng",
-      list: ["256GB", "512GB", "1TB"],
+      list: [
+        {
+          value: "250GB",
+          isActive: true,
+        },
+        {
+          value: "512GB",
+        },
+        {
+          value: "1TB",
+        },
+      ],
     },
     {
       name: "Màu sắc",
-      list: ["Trắng", "Đen", "Cam"],
+      list: [
+        {
+          value: "Trắng",
+          isActive: true,
+        },
+        {
+          value: "Đen",
+        },
+        {
+          value: "Cam",
+        },
+      ],
     },
   ];
 
@@ -38,7 +62,7 @@ export default function ProductDetail() {
   ];
 
   useEffect(() => {
-    setPageName('Chi tiết sản phẩm')
+    setPageName("Chi tiết sản phẩm");
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -60,7 +84,13 @@ export default function ProductDetail() {
                 <p className={styles["model-name"]}>{model.name}</p>
                 <div className={styles["model-badge-list"]}>
                   {model.list.map((item) => (
-                    <span className={styles['model-badge-item']}>{item}</span>
+                    <span
+                      className={clsx(styles["model-badge-item"], {
+                        [styles["badge-active"]]: item.isActive,
+                      })}
+                    >
+                      {item.value}
+                    </span>
                   ))}
                 </div>
               </div>

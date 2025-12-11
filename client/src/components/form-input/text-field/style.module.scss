@@ -25,6 +25,7 @@
       }
     }
     :global(.MuiInputBase-root) {
+      padding: 0;
       fieldset {
         border: 1px solid var(--input-border-primary);
       }

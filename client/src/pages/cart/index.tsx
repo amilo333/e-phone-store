@@ -1,6 +1,13 @@
 import { Button, Field, RadioGroup, TextField } from "@/components";
 import { usePageStore } from "@/stores";
-import { CheckCircle, CreditCard02, MarkerPin04 } from "@untitledui/icons";
+import {
+  CheckCircle,
+  CreditCard02,
+  MarkerPin04,
+  Phone01,
+  Trash03,
+  User01,
+} from "@untitledui/icons";
 import clsx from "clsx";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -11,6 +18,8 @@ export default function Cart() {
 
   const { control } = useForm({
     defaultValues: {
+      name: "",
+      phone: "",
       address: "",
       payment: "cod",
     },
@@ -43,7 +52,9 @@ export default function Cart() {
                 <strong className={styles["device-cost"]}>17.500.000đ</strong>
               </div>
             </div>
-            <div className={styles["right-side"]}></div>
+            <div className={styles["right-side"]}>
+              <Trash03 width={20} height={20} />
+            </div>
           </div>
         ))}
 
@@ -73,16 +84,27 @@ export default function Cart() {
         <div className={styles["book-info"]}>
           <div className={styles["delivery-address"]}>
             <p className={styles["title"]}>
+              <User01 width={18} height={18} />
+              <span>Họ và tên</span>
+            </p>
+            <Field control={control} name="name">
+              <TextField />
+            </Field>
+
+            <p className={styles["title"]}>
+              <Phone01 width={18} height={18} />
+              <span>Số điện thoại</span>
+            </p>
+            <Field control={control} name="name">
+              <TextField />
+            </Field>
+
+            <p className={styles["title"]}>
               <MarkerPin04 width={18} height={18} />
               <span>Địa chỉ giao hàng</span>
             </p>
-            <p>
-              Tầng hầm B1, tòa nhà Golden West, 2 P. Lê Văn Thiêm, Nhân Chính,
-              Thanh Xuân, Hà Nội
-            </p>
-            <span className={styles["title"]}>hoặc nhập</span>
             <Field control={control} name="address">
-              <TextField />
+              <TextField multiline rows={2} />
             </Field>
           </div>
           <div className={styles["payment-method"]}>

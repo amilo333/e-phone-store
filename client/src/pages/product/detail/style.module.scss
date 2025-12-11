@@ -46,6 +46,10 @@
                 color: var(--light);
               }
             }
+            .badge-active {
+              background-color: var(--dark);
+              color: var(--light);
+            }
           }
         }
       }
