@@ -1,0 +1,34 @@
+@mixin white-card {
+  background-color: var(--light);
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.revenue-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  .statistic {
+    @include white-card;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    .single-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .stat-title {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .stat-value {
+        font-size: 17px;
+      }
+    }
+  }
+  .chart-section {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 20px;
+  }
+}

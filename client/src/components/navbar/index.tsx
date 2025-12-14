@@ -83,6 +83,7 @@ export default function Navbar() {
           <Button
             color={isAuthenticated ? "error" : "primary"}
             onClick={handleAuthen}
+            variant="outlined"
           >
             {isAuthenticated ? "Đăng xuất" : "Đăng nhập"}
           </Button>

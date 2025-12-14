@@ -1,4 +1,12 @@
-import { ShoppingBag01, ShoppingCart01, User02 } from "@untitledui/icons";
+import {
+  BarChartSquareUp,
+  BezierCurve03,
+  Cube01,
+  File06,
+  ShoppingBag01,
+  ShoppingCart01,
+  User02,
+} from "@untitledui/icons";
 
 export const langOption = [
   { label: "Việt Nam", value: "vi" },
@@ -13,12 +21,32 @@ export const publicMenuIcon = [
   },
   {
     icon: ShoppingCart01,
-    label: "Quản lý giỏ hàng",
+    label: "Giỏ hàng",
     to: "/cart",
   },
 ];
 
 export const privateMenuIcon = [
+  {
+    icon: BezierCurve03,
+    label: "Quản lý sản phẩm",
+    to: "/product/management",
+  },
+  {
+    icon: Cube01,
+    label: "Quản lý đơn hàng",
+    to: "/product/ordered",
+  },
+  {
+    icon: File06,
+    label: "Quản lý danh mục",
+    to: "/category/management",
+  },
+    {
+    icon: BarChartSquareUp,
+    label: "Thống kê doanh thu",
+    to: "/revenue",
+  },
   {
     icon: User02,
     label: "Quản lý tài khoản",

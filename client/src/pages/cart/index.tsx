@@ -27,7 +27,6 @@ export default function Cart() {
 
   useEffect(() => {
     setPageName("Quản lý giỏ hàng");
-    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

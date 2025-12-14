@@ -63,7 +63,6 @@ export default function ProductDetail() {
 
   useEffect(() => {
     setPageName("Chi tiết sản phẩm");
-    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

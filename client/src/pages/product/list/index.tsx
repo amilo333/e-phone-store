@@ -22,7 +22,6 @@ export default function ProducList() {
 
   useEffect(() => {
     setPageName("Danh sách sản phẩm");
-    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

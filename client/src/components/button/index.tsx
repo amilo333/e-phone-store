@@ -2,7 +2,11 @@ import MuiButton from "@mui/material/Button";
 import type { TProps } from "./type";
 
 export default function Button(props: TProps) {
-  const { children, ...rest } = props;
+  const { children, variant = "contained", ...rest } = props;
 
-  return <MuiButton {...rest}>{children}</MuiButton>;
+  return (
+    <MuiButton variant={variant} {...rest}>
+      {children}
+    </MuiButton>
+  );
 }

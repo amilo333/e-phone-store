@@ -1,0 +1,40 @@
+.product-ordered-container {
+  .action-section {
+    background-color: var(--light);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    .search-field-group {
+      display: flex;
+      gap: 10px;
+      .search-field {
+        width: 250px;
+      }
+    }
+  }
+  .action-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    .edit-status {
+      cursor: pointer;
+    }
+  }
+  .status-badge {
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    color: var(--light);
+    &.ordered {
+      background-color: var(--error-primary);
+    }
+    &.preparing {
+      background-color: var(--warn-color);
+    }
+    &.shipping {
+      background-color: var(--success-color);
+    }
+  }
+}

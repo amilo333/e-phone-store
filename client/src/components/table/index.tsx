@@ -1,13 +1,14 @@
-import Paper from "@mui/material/Paper";
+import { Paper } from "@mui/material";
 import { default as MuiTable } from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import type { TProps } from "./type";
-import styles from "./style.module.scss";
 import clsx from "clsx";
+import { Fragment } from "react/jsx-runtime";
+import styles from "./style.module.scss";
+import type { TProps } from "./type";
 
 export default function Table<T>(props: TProps<T>) {
   const { columns, data, maxHeight } = props;
@@ -19,12 +20,12 @@ export default function Table<T>(props: TProps<T>) {
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <>
+                <Fragment key={column.id}>
                   {column.sticky ? (
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      style={{ minWidth: column.minWidth, width: column.width }}
                       className={clsx({
                         [styles["pinned-column-header-left"]]:
                           column.sticky === "left",
@@ -38,23 +39,23 @@ export default function Table<T>(props: TProps<T>) {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      style={{ minWidth: column.minWidth, width: column.width }}
                     >
                       {column.label}
                     </TableCell>
                   )}
-                </>
+                </Fragment>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => {
+            {data.map((row, rowIndex) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
-                      <>
+                      <Fragment key={column.id}>
                         {column.sticky ? (
                           <TableCell
                             key={column.id}
@@ -66,14 +67,18 @@ export default function Table<T>(props: TProps<T>) {
                                 column.sticky === "right",
                             })}
                           >
-                            {column.format ? column.format(value) : value}
+                            {column.cell
+                              ? column.cell(value, rowIndex, row)
+                              : value}
                           </TableCell>
                         ) : (
                           <TableCell key={column.id} align={column.align}>
-                            {column.format ? column.format(value) : value}
+                            {column.cell
+                              ? column.cell(value, rowIndex, row)
+                              : value}
                           </TableCell>
                         )}
-                      </>
+                      </Fragment>
                     );
                   })}
                 </TableRow>

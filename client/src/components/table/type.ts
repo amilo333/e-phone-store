@@ -1,7 +1,7 @@
 export type TProps<T> = {
   columns: TColumn[];
   data: T[];
-  maxHeight?: number;
+  maxHeight?: number | string;
   infinityScroll?: boolean;
 };
 
@@ -14,7 +14,10 @@ export type TColumn = {
   id: string;
   label: string;
   minWidth?: number;
-  align?: "right";
+  width?: number;
+  align?: TAlign;
   sticky?: "left" | "right";
-  format?: (value: number) => string;
+  cell?: (value: string, index: number, row: unknown) => React.ReactElement;
 };
+
+export type TAlign = "left" | "right" | "inherit" | "center" | "justify"

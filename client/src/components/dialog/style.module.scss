@@ -1,0 +1,10 @@
+.dialog-container {
+  .dialog-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+  }
+  :global(.MuiDialogActions-root) {
+    padding: 0 20px 20px ;
+  }
+}
