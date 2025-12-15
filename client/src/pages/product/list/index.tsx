@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import styles from "./style.module.scss";
+import { productDatas } from "./constant";
 
 export default function ProducList() {
   const { setPageName } = usePageStore();
@@ -45,29 +46,28 @@ export default function ProducList() {
       <Breadscrumbs items={[{ label: "Iphone", href: "/?product=iphone" }]} />
 
       <div className={styles["product-grid"]}>
-        {["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].map((item) => (
-          <div key={item} className={styles["product-card"]}>
+        {productDatas.map((item) => (
+          <div key={item.id} className={styles["product-card"]}>
             <img
               className={styles["product-img"]}
-              src="https://cdn2.cellphones.com.vn/insecure/rs:fill:358:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-17-pro-cam_3.jpg"
+              src={item.image}
               alt="product"
-              onClick={() => redirectToDetail(item)}
+              onClick={() => redirectToDetail(item.id)}
             />
             <div className={styles["product-info"]}>
               <p
                 className={styles["product-name"]}
-                onClick={() => redirectToDetail(item)}
+                onClick={() => redirectToDetail(item.id)}
               >
-                Bàn phím AKKO ACR Pro Alice Plus Spray Paint White AKKO CS
-                switch
+               {item.productName}
               </p>
               <div className={styles["info-badge"]}>
-                <span className={styles["badge"]}>6.9 inches</span>
-                <span className={styles["badge"]}>256GB</span>
+                <span className={styles["badge"]}>{item.size}</span>
+                <span className={styles["badge"]}>{item.ram}</span>
               </div>
               <div className={styles["product-cost"]}>
-                <p className={styles["product-cost-base"]}>30.000.000đ</p>
-                <p className={styles["product-cost-sale-off"]}>27.999.000đ</p>
+                <p className={styles["product-cost-base"]}>{item.rawCost.toLocaleString()}đ</p>
+                <p className={styles["product-cost-sale-off"]}>{item.cost.toLocaleString()}đ</p>
               </div>
               <div className={styles["card-footer"]}>
                 <div className={styles["rating"]}>

@@ -1,3 +1,4 @@
+import withAuthRouter from "@/components/HOC/auth-router";
 import MainLayout from "@/layouts/main-layout";
 import Cart from "@/pages/cart";
 import CategoryManament from "@/pages/category";
@@ -6,6 +7,7 @@ import ProducList from "@/pages/product/list";
 import ProductManagement from "@/pages/product/management";
 import ProductOrdered from "@/pages/product/ordered";
 import Revenue from "@/pages/revenue";
+import UserManagement from "@/pages/user/management";
 import { createBrowserRouter } from "react-router";
 import AuthLayout from "../layouts/auth-layout";
 import Login from "../pages/auth/login";
@@ -34,24 +36,28 @@ export const router = createBrowserRouter([
         Component: ProductDetail,
       },
       {
+        path: "cart",
+        Component: Cart,
+      },
+      {
         path: "/product/management",
-        Component: ProductManagement,
+        Component: withAuthRouter(ProductManagement),
       },
       {
         path: "/product/ordered",
-        Component: ProductOrdered,
+        Component: withAuthRouter(ProductOrdered),
       },
       {
         path: "/category/management",
-        Component: CategoryManament,
+        Component: withAuthRouter(CategoryManament),
       },
       {
         path: "/revenue",
-        Component: Revenue,
+        Component: withAuthRouter(Revenue),
       },
       {
-        path: "cart",
-        Component: Cart,
+        path: "/user/management",
+        Component: withAuthRouter(UserManagement),
       },
     ],
   },

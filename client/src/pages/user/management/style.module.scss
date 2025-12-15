@@ -1,0 +1,30 @@
+.user-management-container {
+  .action-section {
+    background-color: var(--light);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    .search-field-group {
+      display: flex;
+      gap: 10px;
+      .search-field {
+        width: 250px;
+      }
+    }
+  }
+  .action-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    .edit-pen {
+      color: var(--info-color);
+      cursor: pointer;
+    }
+    .trash-bin {
+      color: var(--error-primary);
+      cursor: pointer;
+    }
+  }
+}

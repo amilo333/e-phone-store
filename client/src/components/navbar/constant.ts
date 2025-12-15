@@ -50,6 +50,6 @@ export const privateMenuIcon = [
   {
     icon: User02,
     label: "Quản lý tài khoản",
-    to: "#",
+    to: "/user/management",
   },
 ];
