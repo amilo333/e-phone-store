@@ -1,6 +1,9 @@
 .gallery-container {
   :global(.image-gallery-image) {
     border-radius: 4px;
+    width: 460px;
+    aspect-ratio: 23/15;
+    object-fit: contain;
   }
   :global(.image-gallery-thumbnail:hover) {
     border: none;
@@ -14,6 +17,9 @@
   }
   :global(.image-gallery-thumbnail-image) {
     border-radius: 4px;
+    width: 95px;
+    aspect-ratio: 95/57;
+    object-fit: contain;
   }
   .chevron-right {
     right: 0;
