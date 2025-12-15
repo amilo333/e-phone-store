@@ -4,7 +4,6 @@ const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const moment = require("moment");
-const router = require("./routes");
 const { login } = require("./controller/user");
 
 const app = express();
@@ -93,7 +92,7 @@ app.post("/api/employee", (req, res) => {
   }
 });
 
-app.post("api/login", (req, res) => login(req, res));
+app.post("/api/login", (req, res) => login(req, res));
 
 app.listen(5000, () =>
   console.log("Mock API running at http://localhost:5000")

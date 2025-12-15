@@ -1,3 +1,52 @@
 [
-  {}
+  {
+    "id": "11111111-1111-1111-1111-111111111111",
+    "name": "Nguyễn Minh Lộc",
+    "email": "locnm@gmail.com",
+    "password": "1411",
+    "dob": "2004-11-14",
+    "gender": "male",
+    "phone": "0901234567",
+    "role_id": "role-admin-uuid"
+  },
+  {
+    "id": "22222222-2222-2222-2222-222222222222",
+    "name": "Tran Thi Bich",
+    "email": "bich.tran@example.com",
+    "password": "bich@123",
+    "dob": "2001-11-03",
+    "gender": "female",
+    "phone": "0912345678",
+    "role_id": "role-user-uuid"
+  },
+  {
+    "id": "33333333-3333-3333-3333-333333333333",
+    "name": "Le Hoang Minh",
+    "email": "minh.le@example.com",
+    "password": "minhpass",
+    "dob": "1995-07-21",
+    "gender": "male",
+    "phone": "0923456789",
+    "role_id": "role-manager-uuid"
+  },
+  {
+    "id": "44444444-4444-4444-4444-444444444444",
+    "name": "Pham Ngoc Lan",
+    "email": "lan.pham@example.com",
+    "password": "lan123456",
+    "dob": "1999-02-14",
+    "gender": "female",
+    "phone": "0934567890",
+    "role_id": "role-user-uuid"
+  },
+  {
+    "id": "55555555-5555-5555-5555-555555555555",
+    "name": "Do Quang Huy",
+    "email": "huy.do@example.com",
+    "password": "huy@2024",
+    "dob": "1992-09-30",
+    "gender": "male",
+    "phone": "0945678901",
+    "role_id": "role-superadmin-uuid"
+  }
 ]

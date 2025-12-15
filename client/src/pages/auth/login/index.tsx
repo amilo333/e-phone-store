@@ -1,7 +1,8 @@
 import { Button, Field, TextField } from "@/components";
 import { useToast } from "@/hooks";
-import userMock from "@/mocks/user.json";
+import { apiService } from "@/services";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { NavLink, useNavigate } from "react-router";
@@ -26,19 +27,21 @@ export default function Login() {
     },
   });
 
-  const handleLogin = async (data: TLoginForm) => {
-    const user = userMock.find(
-      (user) =>
-        user.username === data.username && user.password === data.password
-    );
-    if (!user) {
-      toast.error("Tên đăng nhập hoặc mật khẩu không đúng!");
-      return;
-    } else {
-      localStorage.setItem('isAuthenticated', 'true');
-      toast.success("Đăng nhập thành công!");
+  const loginMutation = useMutation({
+    mutationFn: async (data: TLoginForm) =>
+      await apiService.post("/login", data),
+    onSuccess: (response) => {
+      toast.success(response.data.message);
+      localStorage.setItem("isAuthenticated", "true");
       navigate("/");
-    }
+    },
+    onError: (error) => {
+      toast.error((error as any).response.data.message);
+    },
+  });
+
+  const handleLogin = async (data: TLoginForm) => {
+    loginMutation.mutate(data);
   };
 
   return (
