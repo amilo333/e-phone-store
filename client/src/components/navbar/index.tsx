@@ -1,9 +1,6 @@
-import { Button, Field, MenuIcon, TextField } from "@/components";
+import { Button, MenuIcon } from "@/components";
 import { usePageStore } from "@/stores";
-import InputAdornment from "@mui/material/InputAdornment";
-import { SearchMd } from "@untitledui/icons";
 import clsx from "clsx";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { privateMenuIcon, publicMenuIcon } from "./constant";
 import styles from "./style.module.scss";
@@ -14,12 +11,6 @@ export default function Navbar() {
 
   const { pageName } = usePageStore();
   const navigate = useNavigate();
-
-  const { control } = useForm({
-    defaultValues: {
-      search: "",
-    },
-  });
 
   const handleAuthen = () => {
     if (isAuthenticated) {
@@ -41,33 +32,18 @@ export default function Navbar() {
       <div className={styles["navbar-wrapper"]}>
         <div className={styles["left-side"]}>
           <span className={styles["logo"]}>EPS</span>
-          {isAuthenticated ? (
-            <>
-              <h3
-                className={clsx(styles["role"], {
-                  [styles["admin"]]: currentUser.role.code === 1,
-                  [styles["vendor"]]: currentUser.role.code === 2,
-                })}
-              >
-                {currentUser.role.label} | {currentUser.name}
-              </h3>
-              <h3>{pageName}</h3>
-            </>
-          ) : (
-            <Field control={control} name="search">
-              <TextField
-                slotProps={{
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchMd />
-                      </InputAdornment>
-                    ),
-                  },
-                }}
-              />
-            </Field>
-          )}
+          <>
+            <h3
+              className={clsx(styles["role"], {
+                [styles["admin"]]: currentUser?.role?.code === 1,
+                [styles["vendor"]]: currentUser?.role?.code === 2,
+              })}
+            >
+              {currentUser?.role?.label ?? "Thoả sức mua sắm"}{" "}
+              {isAuthenticated && "|"} {currentUser?.name}
+            </h3>
+            <h3>{pageName}</h3>
+          </>
         </div>
         <div className={styles["right-side"]}>
           <div className={styles["page-icon-group"]}>
