@@ -11,7 +11,7 @@ import styles from "./style.module.scss";
 import type { TProps } from "./type";
 
 export default function Table<T>(props: TProps<T>) {
-  const { columns, data, maxHeight } = props;
+  const { columns, data = [], maxHeight } = props;
 
   return (
     <Paper className={styles["table-container"]}>

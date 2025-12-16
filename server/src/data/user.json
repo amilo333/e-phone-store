@@ -7,7 +7,7 @@
     "dob": "2004-11-14",
     "gender": "male",
     "phone": "0901234567",
-    "role_id": "role-admin-uuid"
+    "role_id": "c3f1a2b4-8e5d-4c2f-9a1b-2d3e4f5a6b7c"
   },
   {
     "id": "22222222-2222-2222-2222-222222222222",
@@ -17,7 +17,7 @@
     "dob": "2001-11-03",
     "gender": "female",
     "phone": "0912345678",
-    "role_id": "role-user-uuid"
+    "role_id": "c3f1a2b4-8e5d-4c2f-9a1b-2d3e4f5a6b7c"
   },
   {
     "id": "33333333-3333-3333-3333-333333333333",
@@ -27,7 +27,7 @@
     "dob": "1995-07-21",
     "gender": "male",
     "phone": "0923456789",
-    "role_id": "role-manager-uuid"
+    "role_id": "b1a2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d"
   },
   {
     "id": "44444444-4444-4444-4444-444444444444",
@@ -37,7 +37,7 @@
     "dob": "1999-02-14",
     "gender": "female",
     "phone": "0934567890",
-    "role_id": "role-user-uuid"
+    "role_id": "b1a2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d"
   },
   {
     "id": "55555555-5555-5555-5555-555555555555",
@@ -47,6 +47,6 @@
     "dob": "1992-09-30",
     "gender": "male",
     "phone": "0945678901",
-    "role_id": "role-superadmin-uuid"
+    "role_id": "b1a2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d"
   }
 ]

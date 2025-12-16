@@ -33,6 +33,7 @@ export default function Login() {
     onSuccess: (response) => {
       toast.success(response.data.message);
       localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("user", JSON.stringify(response.data.data));
       navigate("/");
     },
     onError: (error) => {

@@ -10,6 +10,7 @@ import styles from "./style.module.scss";
 
 export default function Navbar() {
   const isAuthenticated = Boolean(localStorage.getItem("isAuthenticated"));
+  const currentUser = JSON.parse(localStorage.getItem("user") ?? "{}");
 
   const { pageName } = usePageStore();
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export default function Navbar() {
   const handleAuthen = () => {
     if (isAuthenticated) {
       localStorage.removeItem("isAuthenticated");
+      localStorage.removeItem("user");
       navigate("/auth/login");
     } else {
       navigate("/auth/login");
@@ -40,7 +42,17 @@ export default function Navbar() {
         <div className={styles["left-side"]}>
           <span className={styles["logo"]}>EPS</span>
           {isAuthenticated ? (
-            <h3>{pageName}</h3>
+            <>
+              <h3
+                className={clsx(styles["role"], {
+                  [styles["admin"]]: currentUser.role.code === 1,
+                  [styles["vendor"]]: currentUser.role.code === 2,
+                })}
+              >
+                {currentUser.role.label} | {currentUser.name}
+              </h3>
+              <h3>{pageName}</h3>
+            </>
           ) : (
             <Field control={control} name="search">
               <TextField

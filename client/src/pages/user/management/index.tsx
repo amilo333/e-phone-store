@@ -1,15 +1,33 @@
 import { Button, Field, Table, TextField } from "@/components";
 import type { TColumn } from "@/components/table/type";
+import { apiService } from "@/services";
 import { usePageStore } from "@/stores";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { tableDatas } from "./constant";
 import styles from "./style.module.scss";
 
 export default function UserManagement() {
   const { setPageName } = usePageStore();
 
-  const { control: searchFormControl } = useForm({});
+  const { control: searchFormControl, getValues } = useForm({
+    defaultValues: { search: "" },
+  });
+
+  const { data, refetch } = useQuery({
+    queryKey: ["get-users"],
+    queryFn: async () => {
+      const search = String(getValues("search") || "").trim();
+      const response = await apiService.get("/get-user", {
+        params: { search },
+      });
+      return response.data.data;
+    },
+  });
+
+  const handleSearch = async () => {
+    await refetch();
+  };
 
   const tableColumns: TColumn[] = useMemo(
     () => [
@@ -58,13 +76,13 @@ export default function UserManagement() {
               placeholder="Tìm kiếm người dùng"
             />
           </Field>
-          <Button>Tìm kiếm</Button>
+          <Button onClick={handleSearch}>Tìm kiếm</Button>
         </div>
       </div>
 
       <Table
         columns={tableColumns}
-        data={tableDatas}
+        data={data}
         maxHeight="calc(100dvh - 200px)"
       />
     </div>
