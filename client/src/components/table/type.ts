@@ -17,7 +17,7 @@ export type TColumn = {
   width?: number;
   align?: TAlign;
   sticky?: "left" | "right";
-  cell?: (value: string, index: number, row: unknown) => React.ReactElement;
+  cell?: (value: string, index: number, row: unknown) => React.ReactElement | string;
 };
 
 export type TAlign = "left" | "right" | "inherit" | "center" | "justify"

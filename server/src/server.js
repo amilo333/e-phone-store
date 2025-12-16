@@ -5,6 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const moment = require("moment");
 const { login, getUserList } = require("./controller/user");
+const { getCategoryList } = require("./controller/category");
 
 const app = express();
 
@@ -92,8 +93,11 @@ app.post("/api/employee", (req, res) => {
   }
 });
 
+// user.controller
 app.post("/api/login", (req, res) => login(req, res));
 app.get("/api/get-user", (req, res) => getUserList(req, res));
+// category.controller
+app.get("/api/get-categories",  (req, res) => getCategoryList(req, res))
 
 app.listen(5000, () =>
   console.log("Mock API running at http://localhost:5000")

@@ -15,10 +15,6 @@ function roleJson() {
   return JSON.parse(txt);
 }
 
-function saveData(arr) {
-  fs.writeFileSync(USER_JSON, JSON.stringify(arr, null, 2));
-}
-
 module.exports = {
   login: (req, res) => {
     const username = req.body.username;

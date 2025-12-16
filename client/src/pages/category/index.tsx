@@ -1,10 +1,12 @@
 import { Button, Dialog, Field, Table, TextField } from "@/components";
 import type { TColumn } from "@/components/table/type";
+import { apiService } from "@/services";
 import { usePageStore } from "@/stores";
+import { useQuery } from "@tanstack/react-query";
 import { Edit05, Trash03 } from "@untitledui/icons";
+import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { tableDatas } from "./constant";
 import styles from "./style.module.scss";
 import type { TTableData } from "./type";
 
@@ -15,8 +17,21 @@ export default function CategoryManament() {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [categoryId, setCategoryId] = useState<string | null>(null);
 
-  const { control: searchFormControl } = useForm({});
+  const { control: searchFormControl, getValues } = useForm({
+    defaultValues: { search: "" },
+  });
   const { control: addFormControl } = useForm({});
+
+  const { data, refetch } = useQuery({
+    queryKey: ["get-categories"],
+    queryFn: async () => {
+      const search = getValues("search");
+      const response = await apiService.get("/get-categories", {
+        params: { search },
+      });
+      return response?.data?.data;
+    },
+  });
 
   const handleOpenAddCategoryDialog = (id?: string) => {
     setOpenAddDialog(true);
@@ -59,12 +74,13 @@ export default function CategoryManament() {
         cell: (_, index) => <>{index + 1}</>,
       },
       {
-        id: "category",
+        id: "name",
         label: "Name",
       },
       {
-        id: "createdAt",
+        id: "created_at",
         label: "Created at",
+        cell: (value) => moment(value).format("YYYY-MM-DD"),
       },
       {
         id: "action",
@@ -90,7 +106,7 @@ export default function CategoryManament() {
               placeholder="Tìm kiếm danh mục"
             />
           </Field>
-          <Button>Tìm kiếm</Button>
+          <Button onClick={() => refetch()}>Tìm kiếm</Button>
         </div>
         <Button
           variant="contained"
@@ -102,7 +118,7 @@ export default function CategoryManament() {
 
       <Table
         columns={tableColumns}
-        data={tableDatas}
+        data={data}
         maxHeight="calc(100dvh - 200px)"
       />
 
