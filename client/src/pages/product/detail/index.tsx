@@ -9,7 +9,6 @@ export default function ProductDetail() {
   const { setPageName } = usePageStore();
 
   const breadscrumbsList = [
-    { label: "Iphone", href: "/?product=iphone" },
     { label: "Iphone 15 Pro MAX", href: "#" },
   ];
 

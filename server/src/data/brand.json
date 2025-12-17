@@ -1,0 +1,42 @@
+[
+  {
+    "id": "111e8400-e29b-41d4-a716-446655440001",
+    "code": "APPLE",
+    "name": "Apple"
+  },
+  {
+    "id": "222e8400-e29b-41d4-a716-446655440002",
+    "code": "SAMSUNG",
+    "name": "Samsung"
+  },
+  {
+    "id": "333e8400-e29b-41d4-a716-446655440003",
+    "code": "XIAOMI",
+    "name": "Xiaomi"
+  },
+  {
+    "id": "444e8400-e29b-41d4-a716-446655440004",
+    "code": "OPPO",
+    "name": "Oppo"
+  },
+  {
+    "id": "555e8400-e29b-41d4-a716-446655440005",
+    "code": "VIVO",
+    "name": "Vivo"
+  },
+  {
+    "id": "666e8400-e29b-41d4-a716-446655440006",
+    "code": "REALME",
+    "name": "Realme"
+  },
+  {
+    "id": "777e8400-e29b-41d4-a716-446655440007",
+    "code": "NOKIA",
+    "name": "Nokia"
+  },
+  {
+    "id": "888e8400-e29b-41d4-a716-446655440008",
+    "code": "ASUS",
+    "name": "Asus"
+  }
+]

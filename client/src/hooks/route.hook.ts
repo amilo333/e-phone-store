@@ -10,7 +10,7 @@ export default function useRoute() {
   // [Hook] Get pathname URL
   const location = useLocation();
   // [Hook] Get searchParams URL
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   // [Var] Transform query to object
   const queryObject = Object.fromEntries(searchParams.entries());

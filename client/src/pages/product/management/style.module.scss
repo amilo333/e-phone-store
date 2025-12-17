@@ -29,4 +29,23 @@
     grid-template-columns: auto auto auto;
     gap: 10px 20px;
   }
+  .dynamic-form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    .title {
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .icon {
+        cursor: pointer;
+      }
+    }
+    .image-list {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      gap: 10px 20px;
+    }
+  }
 }
