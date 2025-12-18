@@ -1,8 +1,9 @@
 import { Button, Dialog, Field, Table, TextField } from "@/components";
 import type { TColumn } from "@/components/table/type";
+import { useToast } from "@/hooks";
 import { apiService } from "@/services";
 import { usePageStore } from "@/stores";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Edit05, Trash03 } from "@untitledui/icons";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
@@ -12,6 +13,7 @@ import type { TTableData } from "./type";
 
 export default function CategoryManament() {
   const { setPageName } = usePageStore();
+  const toast = useToast();
 
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -20,7 +22,7 @@ export default function CategoryManament() {
   const { control: searchFormControl, getValues } = useForm({
     defaultValues: { search: "" },
   });
-  const { control: addFormControl } = useForm({});
+  const { control: addFormControl, handleSubmit, setValue } = useForm({});
 
   const { data, refetch } = useQuery({
     queryKey: ["get-categories"],
@@ -33,16 +35,65 @@ export default function CategoryManament() {
     },
   });
 
-  const handleOpenAddCategoryDialog = (id?: string) => {
+  const createCategoryMutation = useMutation({
+    mutationFn: async (data: any) =>
+      await apiService.post("/create-category", data),
+    onSuccess: () => {
+      toast.success("Tạo danh mục thành công");
+      handleCloseAddCategoryDialog();
+      refetch();
+    },
+    onError: (error) => {
+      toast.error((error as any).response.data.message);
+    },
+  });
+
+  const updateCategoryMutation = useMutation({
+    mutationFn: async (data: any) =>
+      await apiService.put(`/update-category/${categoryId}`, data),
+    onSuccess: () => {
+      toast.success("Sửa danh mục thành công");
+      handleCloseAddCategoryDialog();
+      refetch();
+    },
+    onError: (error) => {
+      toast.error((error as any).response.data.message);
+    },
+  });
+
+  const deleteCategoryMutation = useMutation({
+    mutationFn: async () =>
+      await apiService.delete(`/delete-category/${categoryId}`),
+    onSuccess: () => {
+      toast.success("Xoá danh mục thành công");
+      handleCloseAddCategoryDialog();
+      refetch();
+    },
+    onError: (error) => {
+      toast.error((error as any).response.data.message);
+    },
+  });
+
+  const handleOpenAddCategoryDialog = (row?: any) => {
     setOpenAddDialog(true);
-    if (id) {
-      setCategoryId(id);
+    setValue("name", row?.name);
+    if (row?.id) {
+      setCategoryId(row?.id);
     }
   };
 
   const handleCloseAddCategoryDialog = () => {
     setOpenAddDialog(false);
+    setOpenDeleteDialog(false)
     setTimeout(() => setCategoryId(null), 500);
+  };
+
+  const handleCreateUpdateCategory = (data: any) => {
+    if (categoryId) {
+      updateCategoryMutation.mutate(data);
+    } else {
+      createCategoryMutation.mutate(data);
+    }
   };
 
   const renderActionTableCell = (row: TTableData) => {
@@ -52,13 +103,16 @@ export default function CategoryManament() {
           width={20}
           height={20}
           className={styles["edit-pen"]}
-          onClick={() => handleOpenAddCategoryDialog(row.id)}
+          onClick={() => handleOpenAddCategoryDialog(row)}
         />
         <Trash03
           width={20}
           height={20}
           className={styles["trash-bin"]}
-          onClick={() => setOpenDeleteDialog(true)}
+          onClick={() => {
+            setOpenDeleteDialog(true);
+            setCategoryId(row?.id);
+          }}
         />
       </div>
     );
@@ -126,9 +180,10 @@ export default function CategoryManament() {
         open={openAddDialog}
         title={categoryId ? "Sửa danh mục" : "Thêm danh mục"}
         onClose={handleCloseAddCategoryDialog}
+        onConfirm={handleSubmit(handleCreateUpdateCategory)}
       >
         <div className={styles["add-category-dialog"]}>
-          <Field control={addFormControl} name="category" label="Category name">
+          <Field control={addFormControl} name="name" label="Category name">
             <TextField />
           </Field>
         </div>
@@ -136,7 +191,11 @@ export default function CategoryManament() {
 
       <Dialog
         open={openDeleteDialog}
-        onClose={() => setOpenDeleteDialog(false)}
+        onClose={() => {
+          setOpenDeleteDialog(false);
+          setCategoryId(null);
+        }}
+        onConfirm={() => deleteCategoryMutation.mutate()}
       >
         <p>Bạn đồng ý xoá danh mục này?</p>
       </Dialog>
