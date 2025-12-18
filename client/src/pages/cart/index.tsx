@@ -130,7 +130,7 @@ export default function Cart() {
           <div className={styles["single-cart-item"]} key={item}>
             <div className={styles["left-side"]}>
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBe3aCKZdDJfdiCwyZCfUUXyuyC2nAd44ouw&s"
+                src={item.image}
                 alt="produc-img"
                 width={100}
                 height={100}

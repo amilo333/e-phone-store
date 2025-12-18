@@ -3,7 +3,7 @@ import { usePageStore } from "@/stores";
 import clsx from "clsx";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { privateMenuIcon, publicMenuIcon } from "./constant";
+import { adminMenuIcon, privateMenuIcon, publicMenuIcon } from "./constant";
 import styles from "./style.module.scss";
 
 export default function Navbar() {
@@ -65,7 +65,19 @@ export default function Navbar() {
                 )}
               </div>
             ))}
-            {isAuthenticated && (
+            {isAuthenticated && currentUser.role.code === 1 && (
+              <>
+                {adminMenuIcon.map((item) => (
+                  <MenuIcon
+                    icon={item.icon}
+                    label={item.label}
+                    to={item.to}
+                    key={item.to}
+                  />
+                ))}
+              </>
+            )}
+            {isAuthenticated && currentUser.role.code === 2 && (
               <>
                 {privateMenuIcon.map((item) => (
                   <MenuIcon

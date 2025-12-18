@@ -43,6 +43,9 @@ export const privateMenuIcon = [
     label: "Quản lý danh mục",
     to: "/category/management",
   },
+];
+
+export const adminMenuIcon = [
   {
     icon: BarChartSquareUp,
     label: "Thống kê doanh thu",
