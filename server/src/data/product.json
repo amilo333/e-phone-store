@@ -1,186 +1,53 @@
 [
   {
-    "id": "92242161-2434-4cfa-a989-3417d55db629",
-    "name": "asdzxc",
-    "description": "zxczxc",
+    "id": "ac9f8919-912b-4863-99d0-c47e6076e226",
+    "name": "Iphone 12",
+    "description": "Máy mới 100% , chính hãng Apple Việt Nam.",
     "images": [
-      "https://ocafe.net/wp-content/uploads/2024/10/anh-nen-may-tinh-4k-1.jpg"
+      "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/_/1_251_1.jpg",
+      "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/4/_/4_185_2.jpg",
+      "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/2/_/2_240_1.jpg",
+      "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/3/_/3_223_1.jpg"
     ],
-    "category_id": "0c8106b2-5b07-4451-a472-5bdf9fc79e1a",
-    "brand_id": "777e8400-e29b-41d4-a716-446655440007",
-    "created_at": "2025-12-17T16:49:10.818Z",
+    "size": "6.7 inches",
+    "screen_tech": "OLED",
+    "camera": "12 MP, f/1.6, 26mm, 1.4µm, dual pixel PDAF, OIS",
+    "chip": "Apple A14 Bionic (5 nm)",
+    "ram": "6 GB",
+    "rom": "128 GB",
+    "battery": "Li-Ion, sạc nhanh 20W, sạc không dây 15W, USB Power Delivery 2.0",
+    "sim": "2 SIM (nano‑SIM và eSIM)",
+    "os": "iOS 14.1",
+    "resolution": "1284 x 2778 pixels",
+    "cpu": "Hexa-core",
+    "compatibility": "Face ID, cảm biến gia tốc, cảm biến tiệm cận, con quay hồi chuyển, cảm biên sáng",
+    "category_id": "64d4e20b-d34f-4b57-a355-9409bb3c71ea",
+    "brand_id": "111e8400-e29b-41d4-a716-446655440001",
+    "created_at": "2025-12-18T13:46:52.802Z",
     "models": [
       {
-        "name": "dsf",
-        "price": "213",
+        "id": "43bd0aef-9d30-4ed3-9f1a-a82a5bac2496",
+        "name": "Vàng",
+        "price": "23490000",
         "in_stock": "12"
-      }
-    ]
-  },
-  {
-    "id": "03a7b852-1072-4f35-bd5f-37dd0610af41",
-    "name": "asdzxc",
-    "description": "zxczxc",
-    "images": [],
-    "category_id": "0c8106b2-5b07-4451-a472-5bdf9fc79e1a",
-    "brand_id": "777e8400-e29b-41d4-a716-446655440007",
-    "created_at": "2025-12-17T16:48:51.521Z",
-    "models": [
+      },
       {
-        "name": "dsf",
-        "price": "213",
+        "id": "766a19ad-3849-4c32-a8a3-f70be3c89bfd",
+        "name": "Xám",
+        "price": "24000000",
+        "in_stock": "23"
+      },
+      {
+        "id": "55f838c8-dcae-4a25-b9b8-790b143fe1d6",
+        "name": "Bạc",
+        "price": "24000000",
         "in_stock": "12"
-      }
-    ]
-  },
-  {
-    "id": "d92d6b8e-baff-41ed-a240-43b436cbe48e",
-    "name": "Iphone",
-    "description": "asdsadzxcxzc",
-    "images": [
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7g14K2Main1VUMYyLhXKTfK3x8dq8ZnuI7A&s"
-    ],
-    "category_id": "317b1769-c84f-4133-9e8c-6c97b46f22c2",
-    "brand_id": "111e8400-e29b-41d4-a716-446655440001",
-    "created_at": "2025-12-17T16:37:37.922Z"
-  },
-  {
-    "id": "d2d49718-0d52-43a0-9ade-c4bb8a76d659",
-    "name": "Iphone 17",
-    "description": "Iphone",
-    "category_id": "64d4e20b-d34f-4b57-a355-9409bb3c71ea",
-    "brand_id": "111e8400-e29b-41d4-a716-446655440001",
-    "created_at": "2025-12-17T15:25:50.062Z"
-  },
-  {
-    "id": "1ae5981a-ce19-469b-a81e-3751243bbde1",
-    "name": "Iphone 17",
-    "description": "Iphone",
-    "category_id": "64d4e20b-d34f-4b57-a355-9409bb3c71ea",
-    "brand_id": "111e8400-e29b-41d4-a716-446655440001",
-    "created_at": "2025-12-17T15:25:23.100Z"
-  },
-  {
-    "id": "cde3cb62-26e8-47b1-bb0c-28c7d2e41463",
-    "name": "Xiaomi redmi note 13 Pro",
-    "description": "Product description",
-    "images": [
-      "image1.jpg",
-      "image2.jpg"
-    ],
-    "size": "6.7 inches",
-    "screen_tech": "OLED",
-    "camera": "48MP Main, 12MP Ultra Wide, 12MP",
-    "chip": "A17 Pro",
-    "ram": "8GB",
-    "rom": "256GB",
-    "battery": "4000mAh",
-    "sim": "Dual SIM",
-    "os": "iOS 17",
-    "resolution": "1080x2400 pixels",
-    "cpu": "Snapdragon 888",
-    "compatibility": "5G, 4G LTE",
-    "category_id": "64d4e20b-d34f-4b57-a355-9409bb3c71ea",
-    "brand_id": "333e8400-e29b-41d4-a716-446655440003",
-    "created_at": "2025-12-17T13:53:25.937Z",
-    "models": [
+      },
       {
-        "color": "Black",
-        "price": 999,
-        "in_stock": 50
-      }
-    ]
-  },
-  {
-    "id": "323f23a6-e132-4cf5-9931-2ef9ae09e8fb",
-    "name": "Iphone 13 Promax 256GB",
-    "description": "Product description",
-    "images": [
-      "image1.jpg",
-      "image2.jpg"
-    ],
-    "size": "6.7 inches",
-    "screen_tech": "OLED",
-    "camera": "48MP Main, 12MP Ultra Wide, 12MP",
-    "chip": "A17 Pro",
-    "ram": "8GB",
-    "rom": "256GB",
-    "battery": "4000mAh",
-    "sim": "Dual SIM",
-    "os": "iOS 17",
-    "resolution": "1080x2400 pixels",
-    "cpu": "Snapdragon 888",
-    "compatibility": "5G, 4G LTE",
-    "category_id": "64d4e20b-d34f-4b57-a355-9409bb3c71ea",
-    "brand_id": "111e8400-e29b-41d4-a716-446655440001",
-    "created_at": "2025-12-17T13:52:54.501Z",
-    "models": [
-      {
-        "color": "Black",
-        "price": 999,
-        "in_stock": 50
-      }
-    ]
-  },
-  {
-    "id": "9cd47915-0e74-4e45-b1c8-e80fd7168d68",
-    "name": "Iphone 14 Promax 256GB",
-    "description": "Product description",
-    "images": [
-      "image1.jpg",
-      "image2.jpg"
-    ],
-    "size": "6.7 inches",
-    "screen_tech": "OLED",
-    "camera": "48MP Main, 12MP Ultra Wide, 12MP",
-    "chip": "A17 Pro",
-    "ram": "8GB",
-    "rom": "256GB",
-    "battery": "4000mAh",
-    "sim": "Dual SIM",
-    "os": "iOS 17",
-    "resolution": "1080x2400 pixels",
-    "cpu": "Snapdragon 888",
-    "compatibility": "5G, 4G LTE",
-    "category_id": "64d4e20b-d34f-4b57-a355-9409bb3c71ea",
-    "brand_id": "111e8400-e29b-41d4-a716-446655440001",
-    "created_at": "2025-12-17T13:52:48.967Z",
-    "models": [
-      {
-        "color": "Black",
-        "price": 999,
-        "in_stock": 50
-      }
-    ]
-  },
-  {
-    "id": "099e0df3-3d99-4ab2-a84f-e6194e9a071d",
-    "name": "Iphone 15 Promax 256GB",
-    "description": "Product description",
-    "images": [
-      "image1.jpg",
-      "image2.jpg"
-    ],
-    "size": "6.7 inches",
-    "screen_tech": "OLED",
-    "camera": "48MP Main, 12MP Ultra Wide, 12MP",
-    "chip": "A17 Pro",
-    "ram": "8GB",
-    "rom": "256GB",
-    "battery": "4000mAh",
-    "sim": "Dual SIM",
-    "os": "iOS 17",
-    "resolution": "1080x2400 pixels",
-    "cpu": "Snapdragon 888",
-    "compatibility": "5G, 4G LTE",
-    "category_id": "64d4e20b-d34f-4b57-a355-9409bb3c71ea",
-    "brand_id": "111e8400-e29b-41d4-a716-446655440001",
-    "created_at": "2025-12-17T13:52:30.016Z",
-    "models": [
-      {
-        "color": "Black",
-        "price": 999,
-        "in_stock": 50
+        "id": "665a6b46-4714-48f4-94f8-2e60b0f4bac3",
+        "name": "Xanh",
+        "price": "24000000",
+        "in_stock": "23"
       }
     ]
   }

@@ -6,17 +6,20 @@ import {
   type PieLabelRenderProps,
 } from "recharts";
 import styles from "./style.module.scss";
-
-const pieData = [
-  { name: "Đã đặt đơn", value: 400 },
-  { name: "Đang chuẩn bị", value: 300 },
-  { name: "Đã giao cho shipper", value: 300 },
-];
+import { useEffect, useState } from "react";
 
 const RADIAN = Math.PI / 180;
 const COLORS = ["--error-primary", "--warn-color", "--success-color"];
 
-export default function ProductStatusChart() {
+export default function ProductStatusChart(props: any) {
+  const { itemCountByStatus } = props;
+
+  const [pieData, setPieData] = useState([
+    { name: "Đã đặt hàng", value: 0 },
+    { name: "Đang chuẩn bị", value: 0 },
+    { name: "Đã giao cho shipper", value: 0 },
+  ]);
+
   const renderCustomizedLabel = ({
     cx,
     cy,
@@ -51,6 +54,20 @@ export default function ProductStatusChart() {
       </text>
     );
   };
+
+  useEffect(() => {
+    if (itemCountByStatus) {
+      setPieData([
+        { name: "Đã đặt hàng", value: itemCountByStatus["Đã đặt hàng"] },
+        { name: "Đang chuẩn bị", value: itemCountByStatus["Đang chuẩn bị"] },
+        {
+          name: "Đã giao cho shipper",
+          value: itemCountByStatus["Đã giao cho shipper"],
+        },
+      ]);
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemCountByStatus]);
 
   return (
     <div className={styles["product-status-chart"]}>

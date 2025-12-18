@@ -95,7 +95,7 @@ export default function ProducList() {
           <div key={item.id} className={styles["product-card"]}>
             <img
               className={styles["product-img"]}
-              src={item.images[0]}
+              src={item.images?.[0]}
               alt="product"
               onClick={() => redirectToDetail(item.id)}
             />
@@ -117,7 +117,10 @@ export default function ProducList() {
                   </p>
                 )}
                 <p className={styles["product-cost-sale-off"]}>
-                  {item.models[0].price}đ
+                  {item?.models?.[0]?.price
+                    ? Number(item?.models?.[0]?.price).toLocaleString()
+                    : 0}
+                  đ
                 </p>
               </div>
               <div className={styles["card-footer"]}>

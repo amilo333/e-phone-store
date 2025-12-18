@@ -7,6 +7,7 @@ const PRODUCT_JSON = path.join(__dirname, "..", "data", "product.json");
 const USER_JSON = path.join(__dirname, "..", "data", "user.json");
 const BRAND_JSON = path.join(__dirname, "..", "data", "brand.json");
 const CATEGORY_JSON = path.join(__dirname, "..", "data", "category.json");
+const ORDER_JSON = path.join(__dirname, "..", "data", "order.json");
 
 function productJson() {
   const txt = fs.readFileSync(PRODUCT_JSON, "utf8");
@@ -28,8 +29,17 @@ function categoryJson() {
   return JSON.parse(txt);
 }
 
+function orderJson() {
+  const txt = fs.readFileSync(ORDER_JSON, "utf8");
+  return JSON.parse(txt);
+}
+
 function saveData(arr) {
   fs.writeFileSync(PRODUCT_JSON, JSON.stringify(arr, null, 2));
+}
+
+function saveOrder(arr) {
+  fs.writeFileSync(ORDER_JSON, JSON.stringify(arr, null, 2));
 }
 
 module.exports = {
@@ -65,7 +75,15 @@ module.exports = {
 
     return success(res, products);
   },
-  getProductDetail: (req, res) => {},
+  getProductDetail: (req, res) => {
+    const { id } = req.params;
+    const products = productJson();
+    const product = products.find((p) => p.id === id);
+    if (!product) {
+      return res.status(400).json({ message: "Product not found" });
+    }
+    return success(res, product);
+  },
   createProduct: (req, res) => {
     const {
       name,
@@ -134,7 +152,10 @@ module.exports = {
       category_id,
       brand_id,
       created_at: new Date().toISOString(),
-      models,
+      models: models.map((model) => ({
+        id: uuidv4(),
+        ...model,
+      })),
     };
     products.unshift(newProduct);
     saveData(products);
@@ -214,4 +235,54 @@ module.exports = {
     saveData(products);
     return success(res, null, "Product deleted successfully");
   },
+  getOrderList: (req, res) => {
+    const { search } = req.query;
+    let orders = orderJson();
+
+    if (search && String(search).trim().length > 0) {
+      const q = String(search).trim().toLowerCase();
+      orders = orders.filter((p) => {
+        const id = p.id ? String(p.id).toLowerCase() : "";
+        return id.includes(q);
+      });
+    }
+
+    return success(res, orders);
+  },
+  bookProduct: (req, res) => {
+    const { booker, phone, address, payment, price, items } = req.body;
+    const orders = orderJson();
+
+    if (!booker || !phone || !address || !payment || !items) {
+      return badRequest(res, "Các trường bắt buộc trống");
+    }
+
+    const newOrder = {
+      id: uuidv4(),
+      booker,
+      phone,
+      address,
+      payment,
+      price,
+      status: "Đã đặt hàng",
+      items,
+      created_at: new Date().toISOString(),
+    };
+    orders.unshift(newOrder);
+    saveOrder(orders);
+    return success(res, newOrder, "Đặt hàng thành công");
+  },
+  updateOrderStatus: (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    const orders = orderJson();
+    const orderIndex = orders.findIndex((o) => o.id === id);
+    if (orderIndex === -1) {
+      return res.status(400).json({ message: "Order not found" });
+    }
+    orders[orderIndex].status = status;
+    saveOrder(orders);
+    return success(res, orders[orderIndex], "Order status updated successfully");
+  }
 };
+ 

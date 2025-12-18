@@ -14,9 +14,18 @@
       }
     }
   }
-  .trash-bin {
-    color: var(--error-primary);
-    cursor: pointer;
+  .action-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    .edit-pen {
+      color: var(--info-color);
+      cursor: pointer;
+    }
+    .trash-bin {
+      color: var(--error-primary);
+      cursor: pointer;
+    }
   }
 }
 
@@ -49,3 +58,4 @@
     }
   }
 }
+ 

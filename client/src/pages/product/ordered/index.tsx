@@ -1,11 +1,13 @@
 import { Button, Dialog, Field, Table, TextField, Tooltip } from "@/components";
 import type { TColumn } from "@/components/table/type";
+import { apiService } from "@/services";
 import { usePageStore } from "@/stores";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { CheckCircle, Hand, Truck01 } from "@untitledui/icons";
 import clsx from "clsx";
+import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { tableDatas } from "./constant";
 import styles from "./style.module.scss";
 import type { TTableData } from "./type";
 
@@ -13,8 +15,56 @@ export default function ProductOrdered() {
   const { setPageName } = usePageStore();
 
   const [openUpdateStatusDialog, setOpenUpdateStatusDialog] = useState(false);
+  const [nextStatus, setNextStatus] = useState("");
+  const [orderId, setOrderId] = useState("");
 
-  const { control: searchFormControl } = useForm({});
+  const {
+    control: searchFormControl,
+    getValues,
+    handleSubmit: onSearchSubmit,
+  } = useForm({});
+
+  const { data: orderList, refetch: refetchOrderList } = useQuery({
+    queryKey: ["ordered-products"],
+    queryFn: async () => {
+      const payload = {
+        search: getValues("search") || "",
+      };
+      const response = await apiService("/get-orders", {
+        params: payload,
+      });
+      return response.data.data;
+    },
+  });
+
+  const updateOrderStatusMutation = useMutation({
+    mutationFn: async ({
+      orderId,
+      status,
+    }: {
+      orderId: string;
+      status: string;
+    }) => {
+      const response = await apiService.put(`/update-order/${orderId}`, {
+        status,
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      refetchOrderList();
+      setOpenUpdateStatusDialog(false);
+      setNextStatus("");
+      setOrderId("");
+    },
+  });
+
+  const handleSearch = () => {
+    refetchOrderList();
+  };
+
+  const changeOrderStatus = () => {
+    updateOrderStatusMutation.mutate({ orderId, status: nextStatus });
+  };
 
   const renderStatus = (value: string) => {
     let statusClassName;
@@ -39,7 +89,6 @@ export default function ProductOrdered() {
   };
 
   const renderActionTableCell = (row: TTableData) => {
-    console.log(row);
     return (
       <div className={styles["action-group"]}>
         {row.status === "Đã đặt hàng" ? (
@@ -49,6 +98,11 @@ export default function ProductOrdered() {
               height={20}
               className={styles["edit-status"]}
               style={{ color: "var(--error-primary)" }}
+              onClick={() => {
+                setOpenUpdateStatusDialog(true);
+                setNextStatus("Đang chuẩn bị");
+                setOrderId(row.id);
+              }}
             />
           </Tooltip>
         ) : row.status === "Đang chuẩn bị" ? (
@@ -58,6 +112,11 @@ export default function ProductOrdered() {
               height={20}
               className={styles["edit-status"]}
               style={{ color: "var(--warn-color)" }}
+              onClick={() => {
+                setOpenUpdateStatusDialog(true);
+                setNextStatus("Đã giao cho shipper");
+                setOrderId(row.id);
+              }}
             />
           </Tooltip>
         ) : (
@@ -82,17 +141,32 @@ export default function ProductOrdered() {
         cell: (_, index) => <>{index + 1}</>,
       },
       {
-        id: "product",
-        label: "Tên sản phẩm",
+        id: "id",
+        label: "ID đơn hàng",
+      },
+      {
+        id: "booker",
+        label: "Người đặt hàng",
+      },
+      {
+        id: "phone",
+        label: "Số điện thoại",
+      },
+      {
+        id: "address",
+        label: "Địa chỉ",
       },
       {
         id: "status",
         label: "Trạng thái",
+        width: 170,
+        align: "center",
         cell: (val) => renderStatus(val),
       },
       {
-        id: "createdAt",
+        id: "created_at",
         label: "Ngày đặt",
+        cell: (val) => moment(val).format("YYYY-MM-DD"),
       },
       {
         id: "action",
@@ -119,21 +193,26 @@ export default function ProductOrdered() {
               placeholder="Tìm kiếm sản phẩm"
             />
           </Field>
-          <Button>Tìm kiếm</Button>
+          <Button onClick={onSearchSubmit(handleSearch)}>Tìm kiếm</Button>
         </div>
       </div>
 
       <Table
         columns={tableColumns}
-        data={tableDatas}
+        data={orderList}
         maxHeight="calc(100dvh - 200px)"
       />
 
       <Dialog
         open={openUpdateStatusDialog}
-        onClose={() => setOpenUpdateStatusDialog(false)}
+        onClose={() => {
+          setOpenUpdateStatusDialog(false);
+          setNextStatus("");
+          setOrderId("");
+        }}
+        onConfirm={changeOrderStatus}
       >
-        <p>Bạn đồng ý xoá danh mục này?</p>
+        <p>Bạn chắc chắn muốn đổi trạng thái đơn hàng?</p>
       </Dialog>
     </div>
   );

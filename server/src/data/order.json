@@ -1,0 +1,116 @@
+[
+  {
+    "id": "798f60f9-661e-48c0-bfb2-621b90222207",
+    "booker": "Trí Lê",
+    "phone": "0986249538",
+    "address": "tòa nhà Ocean Park, 1 đào duy anh",
+    "payment": "cod",
+    "price": 47490000,
+    "status": "Đã giao cho shipper",
+    "items": [
+      {
+        "productId": "ac9f8919-912b-4863-99d0-c47e6076e226",
+        "productName": "Iphone 12",
+        "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/_/1_251_1.jpg",
+        "model": {
+          "id": "766a19ad-3849-4c32-a8a3-f70be3c89bfd",
+          "name": "Xám",
+          "price": "24000000",
+          "in_stock": "23",
+          "isActive": true
+        },
+        "quantity": 1
+      },
+      {
+        "productId": "ac9f8919-912b-4863-99d0-c47e6076e226",
+        "productName": "Iphone 12",
+        "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/_/1_251_1.jpg",
+        "model": {
+          "id": "43bd0aef-9d30-4ed3-9f1a-a82a5bac2496",
+          "name": "Vàng",
+          "price": "23490000",
+          "in_stock": "12",
+          "isActive": true
+        },
+        "quantity": 1
+      }
+    ],
+    "created_at": "2025-12-18T13:51:46.661Z"
+  },
+  {
+    "id": "798f60f9-661e-48c0-bfb2-621b90222205",
+    "booker": "Trí Lê",
+    "phone": "0986249538",
+    "address": "tòa nhà Ocean Park, 1 đào duy anh",
+    "payment": "cod",
+    "price": 47490000,
+    "status": "Đã đặt hàng",
+    "items": [
+      {
+        "productId": "ac9f8919-912b-4863-99d0-c47e6076e226",
+        "productName": "Iphone 12",
+        "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/_/1_251_1.jpg",
+        "model": {
+          "id": "766a19ad-3849-4c32-a8a3-f70be3c89bfd",
+          "name": "Xám",
+          "price": "24000000",
+          "in_stock": "23",
+          "isActive": true
+        },
+        "quantity": 1
+      },
+      {
+        "productId": "ac9f8919-912b-4863-99d0-c47e6076e226",
+        "productName": "Iphone 12",
+        "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/_/1_251_1.jpg",
+        "model": {
+          "id": "43bd0aef-9d30-4ed3-9f1a-a82a5bac2496",
+          "name": "Vàng",
+          "price": "23490000",
+          "in_stock": "12",
+          "isActive": true
+        },
+        "quantity": 1
+      }
+    ],
+    "created_at": "2025-12-18T13:51:46.661Z"
+  },
+  {
+    "id": "798f60f9-661e-48c0-bfb2-621b90222204",
+    "booker": "Trí Lê",
+    "phone": "0986249538",
+    "address": "tòa nhà Ocean Park, 1 đào duy anh",
+    "payment": "cod",
+    "price": 47490000,
+    "status": "Đã giao cho shipper",
+    "items": [
+      {
+        "productId": "ac9f8919-912b-4863-99d0-c47e6076e226",
+        "productName": "Iphone 12",
+        "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/_/1_251_1.jpg",
+        "model": {
+          "id": "766a19ad-3849-4c32-a8a3-f70be3c89bfd",
+          "name": "Xám",
+          "price": "24000000",
+          "in_stock": "23",
+          "isActive": true
+        },
+        "quantity": 1
+      },
+      {
+        "productId": "ac9f8919-912b-4863-99d0-c47e6076e226",
+        "productName": "Iphone 12",
+        "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/_/1_251_1.jpg",
+        "model": {
+          "id": "43bd0aef-9d30-4ed3-9f1a-a82a5bac2496",
+          "name": "Vàng",
+          "price": "23490000",
+          "in_stock": "12",
+          "isActive": true
+        },
+        "quantity": 1
+      }
+    ],
+    "created_at": "2025-12-18T13:51:46.661Z"
+  }
+]

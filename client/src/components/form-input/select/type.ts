@@ -14,6 +14,7 @@ export type TProps<
     options: TSelectOption[];
     label?: string;
     required?: boolean;
+    error?: string;
     width?: string;
   };
 
@@ -21,3 +22,4 @@ export type TSelectOption = {
   label: string;
   value: string;
 };
+ 

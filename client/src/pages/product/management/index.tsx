@@ -3,12 +3,17 @@ import type { TColumn } from "@/components/table/type";
 import { useToast } from "@/hooks";
 import { apiService } from "@/services";
 import { usePageStore } from "@/stores";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Minus, Plus, Trash03 } from "@untitledui/icons";
+import { Edit05, Minus, Plus, Trash03 } from "@untitledui/icons";
 import moment from "moment";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import type z from "zod";
+import { ProductManagementSchema } from "./schema";
 import styles from "./style.module.scss";
+
+type TAddProductForm = z.infer<ReturnType<typeof ProductManagementSchema>>;
 
 export default function ProductManagement() {
   const { setPageName } = usePageStore();
@@ -18,13 +23,20 @@ export default function ProductManagement() {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [images, setImages] = useState<number[]>([]);
   const [models, setModels] = useState<number[]>([]);
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(
+    null
+  );
 
   const { control: searchFormControl, getValues: getSearchValues } = useForm();
   const {
     control: addFormControl,
     handleSubmit: handleSubmitProduct,
-    reset,
-  } = useForm({});
+    formState: { errors },
+    reset: resetAddProductForm,
+    setValue,
+  } = useForm<TAddProductForm>({
+    resolver: zodResolver(ProductManagementSchema()),
+  });
 
   const { data: productListData, refetch: refetchGetProductList } = useQuery({
     queryKey: ["get-products"],
@@ -77,7 +89,6 @@ export default function ProductManagement() {
 
   const productMutation = useMutation({
     mutationFn: async (data: any) => {
-      console.log(data);
       const payload = {
         ...data,
         category_id: data.category?.value,
@@ -91,12 +102,11 @@ export default function ProductManagement() {
           };
         }),
       };
-      console.log(payload)
       const response = await apiService.post("/create-product", payload);
       return response?.data?.data;
     },
     onSuccess: () => {
-      reset();
+      resetAddProductForm();
       setOpenAddProductDialog(false);
       refetchGetProductList();
     },
@@ -105,20 +115,65 @@ export default function ProductManagement() {
     },
   });
 
+  const removeProductMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const response = await apiService.delete(`/delete-product/${id}`);
+      return response?.data?.data;
+    },
+    onSuccess: () => {
+      refetchGetProductList();
+      setOpenDeleteDialog(false);
+    },
+    onError: (error: any) => {
+      toast.error(error.response.data.message);
+    },
+  });
+
+  const handleCloseAddProductDialog = () => {
+    setOpenAddProductDialog(false);
+    resetAddProductForm();
+    setImages([]);
+    setModels([]);
+  };
+
   const handleCreateProduct = (data: any) => {
     productMutation.mutate(data);
   };
 
-  const renderActionTableCell = () => {
+  const handleClickEdit = (row: any) => {
+    const category = categoryListData?.find(
+      (item: any) => item.value === row.category_id
+    );
+    const brand = brandListData?.find(
+      (item: any) => item.value === row.brand_id
+    );
+    setImages(row.images.map((_: any, index: number) => index + 1));
+    setModels(row.models.map((_: any, index: number) => index + 1));
+    resetAddProductForm(row);
+    setValue("category", category);
+    setValue("brand", brand);
+    setOpenAddProductDialog(true);
+  };
+
+  const renderActionTableCell = (row: any) => {
     return (
-      <>
+      <div className={styles["action-group"]}>
+        <Edit05
+          width={20}
+          height={20}
+          className={styles["edit-pen"]}
+          onClick={() => handleClickEdit(row)}
+        />
         <Trash03
           width={20}
           height={20}
           className={styles["trash-bin"]}
-          onClick={() => setOpenDeleteDialog(true)}
+          onClick={() => {
+            setOpenDeleteDialog(true);
+            setSelectedProductId(row.id);
+          }}
         />
-      </>
+      </div>
     );
   };
 
@@ -154,7 +209,7 @@ export default function ProductManagement() {
         id: "action",
         label: "Action",
         align: "center",
-        cell: () => renderActionTableCell(),
+        cell: (_, __, row) => renderActionTableCell(row),
       },
     ],
     []
@@ -196,73 +251,73 @@ export default function ProductManagement() {
         title="Thêm sản phẩm"
         width="700px"
         minWidth="800px"
-        onClose={() => {
-          reset();
-          setOpenAddProductDialog(false);
-        }}
+        onClose={handleCloseAddProductDialog}
         onConfirm={handleSubmitProduct(handleCreateProduct)}
       >
         <div className={styles["add-product-dialog"]}>
           <div className={styles["form-grid"]}>
             <Field control={addFormControl} name="name" label="Tên sản phẩm">
-              <TextField />
+              <TextField error={errors.name?.message} />
             </Field>
             <Field control={addFormControl} name="description" label="Mô tả">
-              <TextField />
+              <TextField error={errors.description?.message} />
             </Field>
             <Field control={addFormControl} name="size" label="Kích thước">
-              <TextField />
+              <TextField error={errors.size?.message} />
             </Field>
             <Field
               control={addFormControl}
-              name="screenTech"
-              label="Loại màn hình"
+              name="screen_tech"
+              label="Công nghệ màn hình"
             >
-              <TextField />
+              <TextField error={errors.screen_tech?.message} />
             </Field>
             <Field control={addFormControl} name="camera" label="Camera">
-              <TextField />
+              <TextField error={errors.camera?.message} />
             </Field>
             <Field control={addFormControl} name="chip" label="Chip">
-              <TextField />
+              <TextField error={errors.chip?.message} />
             </Field>
             <Field control={addFormControl} name="ram" label="RAM">
-              <TextField />
+              <TextField error={errors.ram?.message} />
             </Field>
             <Field control={addFormControl} name="rom" label="ROM">
-              <TextField />
+              <TextField error={errors.rom?.message} />
             </Field>
             <Field control={addFormControl} name="battery" label="Pin">
-              <TextField />
+              <TextField error={errors.battery?.message} />
             </Field>
             <Field control={addFormControl} name="sim" label="SIM">
-              <TextField />
+              <TextField error={errors.sim?.message} />
             </Field>
             <Field control={addFormControl} name="os" label="Hệ điều hành">
-              <TextField />
+              <TextField error={errors.os?.message} />
             </Field>
             <Field
               control={addFormControl}
               name="resolution"
               label="Độ phân giải"
             >
-              <TextField />
+              <TextField error={errors.resolution?.message} />
             </Field>
             <Field control={addFormControl} name="cpu" label="CPU">
-              <TextField />
+              <TextField error={errors.cpu?.message} />
             </Field>
             <Field
               control={addFormControl}
               name="compatibility"
               label="Độ tương thích"
             >
-              <TextField />
+              <TextField error={errors.compatibility?.message} />
             </Field>
             <Field control={addFormControl} name="category" label="Danh mục">
-              <Select options={categoryListData} />
+              <Select
+                options={categoryListData}
+                error={errors.category?.message}
+              />
             </Field>
             <Field control={addFormControl} name="brand" label="Hãng">
-              <Select options={brandListData} />
+              <Select options={brandListData} error={errors.brand?.message} />
             </Field>
           </div>
           <div className={styles["dynamic-form"]}>
@@ -291,7 +346,7 @@ export default function ProductManagement() {
                   control={addFormControl}
                   name={`image${item}`}
                 >
-                  <TextField />
+                  <TextField error={errors[`image${item}`]?.message} />
                 </Field>
               ))}
             </div>
@@ -317,29 +372,38 @@ export default function ProductManagement() {
             </p>
             <div className={styles["image-list"]}>
               {models.map((item) => (
-                <>
+                <React.Fragment key={item}>
                   <Field
                     key={item}
                     control={addFormControl}
                     name={`model-name${item}`}
                   >
-                    <TextField placeholder={`Tên Model ${item}`} />
+                    <TextField
+                      placeholder={`Tên Model ${item}`}
+                      error={errors[`model-name${item}`]?.message}
+                    />
                   </Field>
                   <Field
                     key={item}
                     control={addFormControl}
                     name={`model-price${item}`}
                   >
-                    <TextField placeholder={`Giá Model ${item}`} />
+                    <TextField
+                      placeholder={`Giá Model ${item}`}
+                      error={errors[`model-price${item}`]?.message}
+                    />
                   </Field>
                   <Field
                     key={item}
                     control={addFormControl}
                     name={`model-in-stock${item}`}
                   >
-                    <TextField placeholder={`Số lượng ${item}`} />
+                    <TextField
+                      placeholder={`Số lượng ${item}`}
+                      error={errors[`model-in-stock${item}`]?.message}
+                    />
                   </Field>
-                </>
+                </React.Fragment>
               ))}
             </div>
           </div>
@@ -349,7 +413,15 @@ export default function ProductManagement() {
       {/* [DIALOG] Delete product */}
       <Dialog
         open={openDeleteDialog}
-        onClose={() => setOpenDeleteDialog(false)}
+        onClose={() => {
+          setOpenDeleteDialog(false);
+          setSelectedProductId(null);
+        }}
+        onConfirm={() => {
+          if (selectedProductId) {
+            removeProductMutation.mutate(selectedProductId);
+          }
+        }}
       >
         <div className={styles["delete-dialog"]}>
           <p>Bạn đồng ý xoá sản phẩm này?</p>
@@ -358,3 +430,4 @@ export default function ProductManagement() {
     </div>
   );
 }
+ 

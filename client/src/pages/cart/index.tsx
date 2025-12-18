@@ -1,5 +1,9 @@
-import { Button, Field, RadioGroup, TextField } from "@/components";
+import { Button, Dialog, Field, RadioGroup, TextField } from "@/components";
+import { useToast } from "@/hooks";
+import { apiService } from "@/services";
 import { usePageStore } from "@/stores";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import {
   CheckCircle,
   CreditCard02,
@@ -9,21 +13,108 @@ import {
   User01,
 } from "@untitledui/icons";
 import clsx from "clsx";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import z from "zod";
 import styles from "./style.module.scss";
 
-export default function Cart() {
-  const { setPageName } = usePageStore();
+const bookingSchema = (cartItems: any[]) =>
+  z
+    .object({
+      name: z.string().min(1, "Trường bắt buộc"),
+      phone: z
+        .string()
+        .min(1, "Trường bắt buộc")
+        .regex(
+          /^0\d{9}$/,
+          "Số điện thoại phải bắt đầu bằng 0 và có đúng 10 chữ số"
+        ),
+      address: z.string().min(1, "Trường bắt buộc"),
+      payment: z.enum(["cod", "banking"]),
+    })
+    .superRefine((_, ctx) => {
+      if (cartItems.length === 0) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["roots"],
+          message: "Giỏ hàng không được để trống",
+        });
+      }
+    });
 
-  const { control } = useForm({
+type TBookingForm = z.infer<ReturnType<typeof bookingSchema>>;
+
+export default function Cart() {
+  const { setPageName, setCartItems: zSetcartItems } = usePageStore();
+  const toast = useToast();
+
+  const [cartItems, setCartItems] = useState(
+    JSON.parse(localStorage.getItem("cart") || "[]")
+  );
+  const [orderPayload, setOrderPayload] = useState<any>(null);
+  const [openConfirmBookingDialog, setOpenConfirmBookingDialog] =
+    useState(false);
+
+  const {
+    control,
+    formState: { errors },
+    reset,
+    handleSubmit,
+  } = useForm<TBookingForm>({
     defaultValues: {
       name: "",
       phone: "",
       address: "",
       payment: "cod",
     },
+    resolver: zodResolver(bookingSchema(cartItems)),
   });
+
+  const createOrderMutation = useMutation({
+    mutationFn: async (payload: any) => {
+      const response = await apiService.post("/create-order", payload);
+      return response.data;
+    },
+    onSuccess: () => {
+      setOpenConfirmBookingDialog(false);
+      localStorage.setItem("cart", JSON.stringify([]));
+      setCartItems([]);
+      toast.success("Đặt hàng thành công");
+      reset();
+    },
+  });
+
+  const removeCartItem = (index: number) => {
+    const newCartItems = [...cartItems];
+    newCartItems.splice(index, 1);
+    setCartItems(newCartItems);
+    localStorage.setItem("cart", JSON.stringify(newCartItems));
+    zSetcartItems(JSON.parse(localStorage.getItem("cart") ?? "[]"));
+  };
+
+  const handleBooking = (data: TBookingForm) => {
+    setOpenConfirmBookingDialog(true);
+    const payload = {
+      booker: data.name,
+      phone: data.phone,
+      address: data.address,
+      payment: data.payment,
+      items: cartItems,
+      price: totalMoney,
+      created_at: new Date().toISOString(),
+    };
+    setOrderPayload(payload);
+  };
+
+  const createOrder = () => {
+    createOrderMutation.mutate(orderPayload);
+  };
+
+  const totalMoney = useMemo(() => {
+    return cartItems.reduce((acc: number, item: any) => {
+      return acc + Number(item.model.price);
+    }, 0);
+  }, [cartItems]);
 
   useEffect(() => {
     setPageName("Quản lý giỏ hàng");
@@ -32,8 +123,10 @@ export default function Cart() {
   return (
     <div className={styles["cart-container"]}>
       <div className={clsx(styles["cart-list-card"], styles["card"])}>
-        <div className={styles["cart-count"]}>Đã chọn: 3 sản phẩm</div>
-        {[1, 2, 3].map((item) => (
+        <div className={styles["cart-count"]}>
+          Đã chọn: {cartItems.length} sản phẩm
+        </div>
+        {cartItems.map((item: any, index: number) => (
           <div className={styles["single-cart-item"]} key={item}>
             <div className={styles["left-side"]}>
               <img
@@ -43,23 +136,34 @@ export default function Cart() {
                 height={100}
               />
               <div className={styles["device-info"]}>
-                <p>HP Victus 16</p>
+                <p>{item.productName}</p>
                 <div className={styles["badge-list"]}>
-                  <span className={styles["badge"]}>Màu bạc</span>
-                  <span className={styles["badge"]}>RAM 8GB</span>
+                  <span className={styles["badge"]}>{item.model.name}</span>
                 </div>
-                <strong className={styles["device-cost"]}>17.500.000đ</strong>
+                <strong className={styles["device-cost"]}>
+                  {Number(item.model.price).toLocaleString()}đ
+                </strong>
               </div>
             </div>
             <div className={styles["right-side"]}>
-              <Trash03 width={20} height={20} />
+              <Trash03
+                width={20}
+                height={20}
+                onClick={() => removeCartItem(index)}
+              />
             </div>
           </div>
         ))}
+        {cartItems.length === 0 && (
+          <p className={styles["empty-cart"]}>Giỏ hàng của bạn đang trống</p>
+        )}
 
         <div className={styles["cart-sum"]}>
           <div className={styles["sum"]}>
-            Tổng cộng <span className={styles["cost"]}>300.000đ</span>
+            Tổng cộng{" "}
+            <span className={styles["cost"]}>
+              {totalMoney.toLocaleString()}đ
+            </span>
           </div>
           <div className={styles["cost-note"]}>
             <p>Đã bao gồm VAT</p>
@@ -87,15 +191,15 @@ export default function Cart() {
               <span>Họ và tên</span>
             </p>
             <Field control={control} name="name">
-              <TextField />
+              <TextField error={errors.name?.message} />
             </Field>
 
             <p className={styles["title"]}>
               <Phone01 width={18} height={18} />
               <span>Số điện thoại</span>
             </p>
-            <Field control={control} name="name">
-              <TextField />
+            <Field control={control} name="phone">
+              <TextField error={errors.phone?.message} />
             </Field>
 
             <p className={styles["title"]}>
@@ -103,7 +207,7 @@ export default function Cart() {
               <span>Địa chỉ giao hàng</span>
             </p>
             <Field control={control} name="address">
-              <TextField multiline rows={2} />
+              <TextField multiline rows={2} error={errors.address?.message} />
             </Field>
           </div>
           <div className={styles["payment-method"]}>
@@ -126,9 +230,22 @@ export default function Cart() {
               />
             </Field>
           </div>
-          <Button variant="contained">Đặt hàng</Button>
+          <p className="error-text">
+            {(errors as { roots?: { message: string } })?.roots?.message}
+          </p>
+          <Button variant="contained" onClick={handleSubmit(handleBooking)}>
+            Đặt hàng
+          </Button>
         </div>
       </div>
+
+      <Dialog
+        open={openConfirmBookingDialog}
+        onClose={() => setOpenConfirmBookingDialog(false)}
+        onConfirm={createOrder}
+      >
+        Bạn có đồng ý đặt hàng?
+      </Dialog>
     </div>
   );
 }

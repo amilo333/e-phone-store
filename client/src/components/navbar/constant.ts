@@ -23,6 +23,7 @@ export const publicMenuIcon = [
     icon: ShoppingCart01,
     label: "Giỏ hàng",
     to: "/cart",
+    hasCount: true,
   },
 ];
 
@@ -42,7 +43,7 @@ export const privateMenuIcon = [
     label: "Quản lý danh mục",
     to: "/category/management",
   },
-    {
+  {
     icon: BarChartSquareUp,
     label: "Thống kê doanh thu",
     to: "/revenue",

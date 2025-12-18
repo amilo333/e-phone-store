@@ -1,6 +1,7 @@
 import { Button, MenuIcon } from "@/components";
 import { usePageStore } from "@/stores";
 import clsx from "clsx";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { privateMenuIcon, publicMenuIcon } from "./constant";
 import styles from "./style.module.scss";
@@ -9,7 +10,7 @@ export default function Navbar() {
   const isAuthenticated = Boolean(localStorage.getItem("isAuthenticated"));
   const currentUser = JSON.parse(localStorage.getItem("user") ?? "{}");
 
-  const { pageName } = usePageStore();
+  const { pageName, cartItems, setCartItems } = usePageStore();
   const navigate = useNavigate();
 
   const handleAuthen = () => {
@@ -21,6 +22,10 @@ export default function Navbar() {
       navigate("/auth/login");
     }
   };
+
+  useEffect(() => {
+    setCartItems(JSON.parse(localStorage.getItem("cart") ?? "[]"));
+  }, [localStorage.getItem("cart")]);
 
   //! JSX Section
   return (
@@ -48,12 +53,17 @@ export default function Navbar() {
         <div className={styles["right-side"]}>
           <div className={styles["page-icon-group"]}>
             {publicMenuIcon.map((item) => (
-              <MenuIcon
-                icon={item.icon}
-                label={item.label}
-                to={item.to}
-                key={item.to}
-              />
+              <div className={styles["menu-item-wrap"]}>
+                <MenuIcon
+                  icon={item.icon}
+                  label={item.label}
+                  to={item.to}
+                  key={item.to}
+                />
+                {item.hasCount && cartItems.length > 0 && (
+                  <span className={styles["counter"]}>{cartItems.length}</span>
+                )}
+              </div>
             ))}
             {isAuthenticated && (
               <>

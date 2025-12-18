@@ -15,6 +15,10 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
+  getProductDetail,
+  bookProduct,
+  getOrderList,
+  updateOrderStatus,
 } = require("./controller/product");
 const { getBrandList } = require("./controller/brand");
 
@@ -216,6 +220,25 @@ app.delete("/api/delete-category/:id", (req, res) => deleteCategory(req, res));
 app.get("/api/get-products", (req, res) => getProductList(req, res));
 /**
  * @swagger
+ * /api/get-product/{id}:
+ *  get:
+ *   tags: [Product]
+ *   summary: Get product detail
+ *   parameters:
+ *     - in: path
+ *       name: id
+ *       required: true
+ *       schema:
+ *         type: string
+ *       description: The product ID
+ *   responses:
+ *     200:
+ *       description: Product detail
+ *
+ */
+app.get("/api/get-product/:id", (req, res) => getProductDetail(req, res));
+/**
+ * @swagger
  * /api/create-product:
  *   post:
  *     tags: [Product]
@@ -383,7 +406,89 @@ app.put("/api/update-product/:id", (req, res) => updateProduct(req, res));
  *         description: Product deleted successfully
  */
 app.delete("/api/delete-product/:id", (req, res) => deleteProduct(req, res));
+/**
+ * @swagger
+ * /api/get-orders:
+ *   get:
+ *     tags: [Order]
+ *     summary: Get order list
+ *     parameters:
+ *        - in: query
+ *          name: search
+ *          schema:
+ *            type: string
+ *          description: Search term for filtering products
+ *     responses:
+ *       200:
+ *         description: List of orders
+ */
+app.get("/api/get-orders", (req, res) => getOrderList(req, res));
+/**
+ * @swagger
+ * /api/create-order:
+ *   post:
+ *     tags: [Order]
+ *     summary: Create a new order
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               booker:
+ *                 type: string
+ *                 example: "John Doe"
+ *               phone:
+ *                 type: string
+ *                 example: ""
+ *               address:
+ *                  type: string
+ *                  example: "123 Main St, City, Country"
+ *               payment:
+ *                  type: string
+ *                  example: "Credit Card"
+ *               price:
+ *                  type: number
+ *                  example: 1999.99
+ *               items:
+ *                  type: array
+ *                  example: [{ "product_id": "prod-123", "model": "Black", "quantity": 1 }]
+ *     responses:
+ *       200:
+ *         description: Order created successfully
+ */
+app.post("/api/create-order", (req, res) => bookProduct(req, res));
+/**
+ * @swagger
+ * /api/update-order/{id}:
+ *   put:
+ *     tags: [Order]
+ *     summary: Update order status
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The order ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 example: "Shipped"
+ *     responses:
+ *       200:
+ *         description: Order status updated successfully
+ */
+app.put("/api/update-order/:id", (req, res) => updateOrderStatus(req, res));
 
 app.listen(5000, () =>
   console.log("Mock API running at http://localhost:5000")
 );
+ 

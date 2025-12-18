@@ -13,6 +13,7 @@ export default function Select(props: TProps) {
     required,
     width = "100px",
     field,
+    error,
     ...rest
   } = props;
 
@@ -28,8 +29,10 @@ export default function Select(props: TProps) {
         popupIcon={<ChevronDown style={{ width: "16px", height: "16px" }} />}
         clearIcon={<XClose style={{ width: "16px", height: "16px" }} />}
         getOptionLabel={(option) => option.label ?? option}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <TextField {...params} error={!!error} />}
       />
+      {error && <small className="error-text">{error}</small>}
     </div>
   );
 }
+ 
