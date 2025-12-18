@@ -26,6 +26,7 @@ export default function ProductManagement() {
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     null
   );
+  const [editMode, setEditMode] = useState(null);
 
   const { control: searchFormControl, getValues: getSearchValues } = useForm();
   const {
@@ -115,6 +116,34 @@ export default function ProductManagement() {
     },
   });
 
+  const updateProductMutation = useMutation({
+    mutationFn: async (data: any) => {
+      const payload = {
+        ...data,
+        category_id: data.category?.value,
+        brand_id: data.brand?.value,
+        images: images.map((item) => data?.[`image${item}`] ?? ""),
+        models: models.map((item) => {
+          return {
+            name: data?.[`model-name${item}`],
+            price: data?.[`model-price${item}`],
+            in_stock: data?.[`model-in-stock${item}`],
+          };
+        }),
+      };
+      const response = await apiService.put(`/update-product/${editMode}`, payload);
+      return response?.data?.data;
+    },
+    onSuccess: () => {
+      resetAddProductForm();
+      setOpenAddProductDialog(false);
+      refetchGetProductList();
+    },
+    onError: (error: any) => {
+      toast.error(error.response.data.message);
+    },
+  });
+
   const removeProductMutation = useMutation({
     mutationFn: async (id: string) => {
       const response = await apiService.delete(`/delete-product/${id}`);
@@ -134,13 +163,19 @@ export default function ProductManagement() {
     resetAddProductForm();
     setImages([]);
     setModels([]);
+    setEditMode(null);
   };
 
   const handleCreateProduct = (data: any) => {
-    productMutation.mutate(data);
+    if (editMode) {
+      updateProductMutation.mutate(data);
+    } else {
+      productMutation.mutate(data);
+    }
   };
 
   const handleClickEdit = (row: any) => {
+    setEditMode(row.id);
     const category = categoryListData?.find(
       (item: any) => item.value === row.category_id
     );
@@ -248,7 +283,7 @@ export default function ProductManagement() {
       {/* [DIALOG] Add product */}
       <Dialog
         open={openAddProductDialog}
-        title="Thêm sản phẩm"
+        title={editMode ? "Sửa sản phẩm" : "Thêm sản phẩm"}
         width="700px"
         minWidth="800px"
         onClose={handleCloseAddProductDialog}
@@ -430,4 +465,3 @@ export default function ProductManagement() {
     </div>
   );
 }
- 
